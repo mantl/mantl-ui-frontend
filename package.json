@@ -1,0 +1,16 @@
+{
+  "name": "mantl-api-webui",
+  "repository": "https://github.com/CiscoCloud/mantl-api-webui",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "autoprefixer": "^6.0.3",
+    "body-parser": "^1.14.1",
+    "brunch": "^1.8.5",
+    "elm-brunch": "^0.3.1",
+    "express": "^4.13.3",
+    "javascript-brunch": "^1.8.0",
+    "morgan": "^1.6.1",
+    "postcss-brunch": "^0.5.0",
+    "sass-brunch": "^1.9.1"
+  }
+}
