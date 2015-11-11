@@ -26,6 +26,17 @@ body {
     .nav-item.active a {
         color: $gray-lightest;
     }
+
+    p.nav-item {
+        padding: $nav-link-padding;
+        margin: 0
+    }
+
+    &.navbar-attention {
+        background-color: $brand-primary;
+        text-align: center;
+        color: $gray-lightest;
+    }
 }
 
 /* services */
@@ -38,4 +49,15 @@ body {
         text-transform: capitalize;
         text-align: center;
     }
+}
+
+/* version */
+.version {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.6em;
+    background-color: $gray-lightest;
+    padding: 2px;
+    border-radius: 5px 0 0 0;
 }

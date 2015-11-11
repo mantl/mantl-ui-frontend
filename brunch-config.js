@@ -18,6 +18,9 @@ exports.config = {
                 javascript: 'scripts/',
                 stylesheet: 'styles/'
             }
+        },
+        appcache: {
+            ignore: /signature/
         }
     }
 };
