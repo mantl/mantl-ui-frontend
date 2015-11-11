@@ -1,8 +1,9 @@
 module Route where
 
-import Html exposing (..)
-import Html.Attributes exposing (class)
+import Attributes exposing (classes)
 import Effects exposing (Effects)
+import Html exposing (..)
+import Html.Attributes exposing (class, classList, href)
 import String exposing (split)
 
 -- MODEL
@@ -50,3 +51,23 @@ notfound =
   div [ class "row" ]
       [ p [ class "col-sm-12" ]
           [ text "Not found!" ] ]
+
+navItem : Model -> Location -> String -> Html
+navItem model page caption =
+  li [ classList [ ("nav-item", True)
+                 , ("active", model == (Just page)) ] ]
+     [ a [ class "nav-link"
+         , href (urlFor page) ]
+         [ text caption ] ]
+
+view : Signal.Address Action -> Model -> Html
+view address model =
+  let
+    link = navItem model
+  in
+    div [ classes [ "navbar", "navbar-light" ] ]
+        [ a [ class "navbar-brand"
+            , href (urlFor Home) ]
+            [ text "Mantl" ]
+        , ul [ classes [ "nav", "navbar-nav" ] ]
+             [ link Home "Home" ] ]

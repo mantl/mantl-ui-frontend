@@ -2,7 +2,7 @@ module Mantl where
 
 import Effects exposing (Effects)
 import Html exposing (..)
-import Html.Events exposing (onClick)
+import Html.Attributes exposing (class)
 import Route
 
 -- MODEL
@@ -35,5 +35,12 @@ update action model =
 
 view : Signal.Address Action -> Model -> Html
 view address model =
-  p [ ]
-    [ model |> toString |> text ]
+  let
+    body =
+      case model.route of
+        Nothing           -> Route.notfound
+        Just (Route.Home) -> p [ ] [ text "home" ]
+  in
+    div [ class "container" ]
+        [ Route.view (Signal.forwardTo address RouteAction) model.route
+        , body ]
