@@ -1,9 +1,11 @@
 module RouteTest where
 
-import Route exposing (..)
-import ElmTest.Test exposing (test, Test, suite)
+import Effects
 import ElmTest.Assertion exposing (assertEqual)
 import ElmTest.Runner.Element exposing (runDisplay)
+import ElmTest.Test exposing (test, Test, suite)
+
+import Route exposing (..)
 
 routes : List (Location, String)
 routes = [ (Home, "/") ]
@@ -26,10 +28,20 @@ locForTest (loc, path) =
 locForTests : Test
 locForTests =
   suite "locFor"
-        ([ test "Nothing" (assertEqual (locFor "/bad/url") Nothing) ]
+        ([ test "Nothing" (assertEqual (locFor "/bad/url") Nothing)
+         , test "with hash" (assertEqual (locFor "#/") (Just Home)) ]
         ++ (List.map locForTest routes))
+
+-- update
+updateTests : Test
+updateTests =
+  suite "update"
+        [ suite "PathChange"
+                [ test "good path" (assertEqual
+                                    (update (PathChange "/") Nothing)
+                                    (Just Home, Effects.none)) ] ]
 
 -- tests
 tests : Test
 tests =
-  suite "routes" [ urlForTests, locForTests ]
+  suite "routes" [ urlForTests, locForTests, updateTests ]

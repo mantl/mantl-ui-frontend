@@ -16,6 +16,14 @@ init = Nothing
 
 -- UPDATE
 
+type Action = PathChange String
+
+update : Action -> Model -> (Model, Effects Action)
+update action model =
+  case action of
+    PathChange path ->
+      ( (locFor path), Effects.none )
+
 -- UTIL
 
 urlFor : Location -> String
