@@ -10,12 +10,18 @@ body {
     text-align: right;
     margin-bottom: 1rem;
 }
+.container.content {
+    padding-top: 1rem;
+    padding-bottom: 5px;
+    background-color: rgba(253, 235, 202, 0.5);
+    min-height: 100%;
+    border-radius: 0 0 1rem 1rem;
+}
 
 /* header */
 .navbar {
     background-color: $gray-dark;
     border-radius: 0;
-    margin-bottom: 1rem;
 
     .nav-item.active a {
         color: $gray-lightest;

@@ -1,5 +1,6 @@
 module Mantl where
 
+import Attributes exposing (classes)
 import Effects exposing (Effects)
 import Html exposing (..)
 import Html.Attributes exposing (class)
@@ -57,5 +58,5 @@ view address model =
   in
     div [ class "app" ]
         [ Route.view (Signal.forwardTo address RouteAction) model.route
-        , div [ class "container" ]
+        , div [ classes [ "container", "content" ] ]
               [ body ] ]
