@@ -7,11 +7,13 @@ import ElmTest.Assertion exposing (assert, assertEqual)
 import ElmTest.Runner.Element exposing (runDisplay)
 
 import RouteTest
+import ServicesTest
 
 tests : Test
 tests =
   suite "A Test Suite"
-        [ RouteTest.tests ]
+        [ RouteTest.tests
+        , ServicesTest.tests ]
 
 main : Element
 main =

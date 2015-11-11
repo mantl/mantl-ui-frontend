@@ -18,6 +18,15 @@ module.exports = function startServer(port, path, callback) {
         res.status(200).end('OK');
     });
 
+    app.get('/_internal/services.json', function(req, res) {
+        res.json([
+            {name: "mesos", path: "/mesos"},
+            {name: "marathon", path: "/marathon"},
+            {name: "consul", path: "/consul"},
+            {name: "chronos", path: "/chronos"}
+        ]);
+    });
+
     app.get('/1/packages', function(req, res) {
         res.json(module.data);
     });
