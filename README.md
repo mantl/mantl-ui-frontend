@@ -1,7 +1,23 @@
 # Mantl-UI frontend
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+**Table of Contents**
+
+- [Mantl-UI frontend](#mantl-ui-frontend)
+    - [Developing](#developing)
+        - [Tests](#tests)
+
+<!-- markdown-toc end -->
+
 ## Developing
 
-You'll need [Elm](http://elm-lang.org/install) and Node installed. Afterward,
-run `npm install` from this directory, then `brunch watch --server`, and the app
-should be available and continuously compiling on `:3333`.
+1. Install [Elm](http://elm-lang.org/install)
+2. Install Elm dependencies: `elm package install`
+3. Install Node dependencies: `npm install`
+4. Run `brunch watch --server` to continuously compile
+5. View the app at [localhost:3333](http://localhost:3333/)
+
+### Tests
+
+To run the tests, run `elm reactor` and then open
+[localhost:8000/app/Test.elm](http://localhost:8000/app/Test.elm)
