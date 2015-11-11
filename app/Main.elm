@@ -11,7 +11,8 @@ app : StartApp.App Mantl.Model
 app = StartApp.start { init = Mantl.init
                      , update = Mantl.update
                      , view = Mantl.view
-                     , inputs = [ ] }
+                     , inputs = [ ]
+                     , inits = [ ] }
 
 main : Signal Html
 main = app.html
