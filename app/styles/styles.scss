@@ -13,6 +13,23 @@ body {
 
 /* header */
 .navbar {
-    background-color: #333;
+    background-color: $gray-dark;
     border-radius: 0;
+    margin-bottom: 1rem;
+
+    .nav-item.active a {
+        color: $gray-lightest;
+    }
+}
+
+/* services */
+.service {
+    .card {
+        background-color: $gray-lightest;
+    }
+
+    h4 {
+        text-transform: capitalize;
+        text-align: center;
+    }
 }
