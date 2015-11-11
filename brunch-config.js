@@ -1,7 +1,7 @@
 exports.config = {
     files: {
-        javascripts: { joinTo: "lib.js" },
-        stylesheets: { joinTo: "app.css" }
+        javascripts: { joinTo: "scripts/lib.js" },
+        stylesheets: { joinTo: "styles/app.css" }
     },
 
     plugins: {
@@ -11,7 +11,13 @@ exports.config = {
         elmBrunch: {
             elmFolder: '.',
             mainModules: [ 'app/Main.elm' ],
-            outputFolder: 'public/'
+            outputFolder: 'public/scripts/'
+        },
+        gzip: {
+            paths: {
+                javascript: 'scripts/',
+                stylesheet: 'styles/'
+            }
         }
     }
 };

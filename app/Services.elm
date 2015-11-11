@@ -4,6 +4,7 @@ import Attributes exposing (classes)
 import Effects exposing (Effects)
 import Html exposing (..)
 import Html.Attributes exposing (href, class)
+import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing ((:=), Decoder, object2, string, list)
 import Signal
@@ -70,10 +71,17 @@ view address model =
     content =
       case model of
         Nothing ->
-          [ p [ class "col-sm-12" ] [ text "No services loaded" ] ]
+          p [ class "col-sm-12" ] [ text "No services loaded" ]
 
         Just services ->
-          List.map (serviceView address) services
+          div [ class "col-sm-12" ]
+              [ div [ classes [ "row", "controls" ] ]
+                    [ div [ class "col-sm-12" ]
+                          [ button [ classes [ "btn", "btn-sm", "btn-secondary" ]
+                                   , onClick address LoadServices ]
+                                   [ text "Reload Services" ] ] ]
+              , div [ classes [ "row", "services" ] ]
+                    (List.map (serviceView address) services) ]
   in
-    div [ classes [ "services", "row" ] ]
-        content
+    div [ class "row" ]
+        [ content ]

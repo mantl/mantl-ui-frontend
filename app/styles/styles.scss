@@ -1,0 +1,18 @@
+@import 'mixins.scss';
+@import 'vendor/bootstrap/variables.scss';
+
+/* general */
+body {
+    background: url(../images/bg.jpg) no-repeat;
+    @include image-2x("../images/bg@2x.jpg", 100%, 840px);
+}
+.controls {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+/* header */
+.navbar {
+    background-color: #333;
+    border-radius: 0;
+}

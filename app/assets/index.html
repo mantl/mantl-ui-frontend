@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html manifest="appcache.appcache">
     <head>
         <title>Mantl</title>
-        <link href="app.css" rel="stylesheet"/>
+        <link href="styles/app.css" rel="stylesheet"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="images/favicon.ico"/>
     </head>
     <body>
-        <script type="text/javascript" src="main.js"></script>
-        <script type="text/javascript" src="lib.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
+        <script type="text/javascript" src="scripts/lib.js"></script>
         <script>require('./lib')(Elm.WebUI)</script>
     </body>
 </html>

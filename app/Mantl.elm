@@ -55,6 +55,7 @@ view address model =
           Services.view (Signal.forwardTo address ServicesAction) model.services
         Nothing -> Route.notfound
   in
-    div [ class "container" ]
+    div [ class "app" ]
         [ Route.view (Signal.forwardTo address RouteAction) model.route
-        , body ]
+        , div [ class "container" ]
+              [ body ] ]

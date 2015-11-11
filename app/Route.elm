@@ -65,9 +65,10 @@ view address model =
   let
     link = navItem model
   in
-    div [ classes [ "navbar", "navbar-light" ] ]
-        [ a [ class "navbar-brand"
-            , href (urlFor Home) ]
-            [ text "Mantl" ]
-        , ul [ classes [ "nav", "navbar-nav" ] ]
-             [ link Home "Home" ] ]
+    div [ classes [ "navbar", "navbar-inverted" ] ]
+        [ div [ class "container" ]
+              [ a [ class "navbar-brand"
+                  , href (urlFor Home) ]
+                  [ text "Mantl" ]
+              , ul [ classes [ "nav", "navbar-nav" ] ]
+                   [ link Home "Home" ] ] ]
