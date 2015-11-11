@@ -2,13 +2,12 @@ module RouteTest where
 
 import Effects
 import ElmTest.Assertion exposing (assertEqual)
-import ElmTest.Runner.Element exposing (runDisplay)
 import ElmTest.Test exposing (test, Test, suite)
 
 import Route exposing (..)
 
 routes : List (Location, String)
-routes = [ (Home, "/") ]
+routes = [ (Home, "#/") ]
 
 -- urlFor
 urlForTest : (Location, String) -> Test

@@ -29,8 +29,12 @@ update action model =
 
 urlFor : Location -> String
 urlFor loc =
-  case loc of
-    Home -> "/"
+  let
+    url =
+      case loc of
+        Home -> "/"
+  in
+    "#" ++ url
 
 locFor : String -> Maybe Location
 locFor path =
