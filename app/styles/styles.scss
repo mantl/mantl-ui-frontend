@@ -65,14 +65,15 @@ body {
     .#{$name} {
         width: $size;
         height: $size;
-        background-color: $brand-warning;
+        background-color: $gray-light;
         border-radius: $size;
 
         &:before {
-            content: "?";
+            content: "#{$name}";
+            text-transform: uppercase;
             line-height: $size;
-            font-size: 4em;
             color: $gray-lightest;
+            font-weight: bold;
         }
     }
 }
