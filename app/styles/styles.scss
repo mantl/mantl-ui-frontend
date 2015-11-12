@@ -51,6 +51,49 @@ body {
     }
 }
 
+/* logos */
+@mixin logo($name, $width, $height) {
+    .#{$name} {
+        width: $width;
+        height: $height;
+        background: url("../images/logos/#{$name}.png") no-repeat;
+        @include image-2x("../images/logos/#{$name}@2x.png", $width, $height);
+    }
+}
+
+@mixin unknown($name, $size) {
+    .#{$name} {
+        width: $size;
+        height: $size;
+        background-color: $brand-warning;
+        border-radius: $size;
+
+        &:before {
+            content: "?";
+            line-height: $size;
+            font-size: 4em;
+            color: $gray-lightest;
+        }
+    }
+}
+
+.service .logo {
+    width: 100%;
+    text-align: center;
+    min-height: 180px;
+    margin-bottom: 15px;
+
+    * {
+        margin: 0 auto;
+    }
+
+    @include logo(mesos, 153px, 180px);
+    @include logo(consul, 178px, 180px);
+
+    @include unknown(marathon, 180px);
+    @include unknown(chronos, 180px);
+}
+
 /* version */
 .version {
     position: absolute;
