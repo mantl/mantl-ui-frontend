@@ -91,8 +91,7 @@ body {
     @include logo(mesos, 153px, 180px);
     @include logo(consul, 178px, 180px);
     @include logo(marathon, 180px, 180px);
-
-    @include unknown(chronos, 180px);
+    @include logo(chronos, 180px, 180px);
 }
 
 /* version */
