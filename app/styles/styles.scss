@@ -6,7 +6,9 @@ body {
     background-image: url(../images/bg.jpg);
     @include image-2x-plain("../images/bg@2x.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% auto;
+    background-position: top center;
+    background-attachment: fixed;
 }
 .controls {
     text-align: right;
