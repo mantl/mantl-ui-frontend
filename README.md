@@ -21,3 +21,9 @@
 
 To run the tests, run `elm reactor` and then open
 [localhost:8000/app/Test.elm](http://localhost:8000/app/Test.elm)
+
+### Preparing for Production
+
+1. Make sure jpegtran and optipng are installed (`brew install jpeg optipng`)
+2. Remove development artifacts: `rm -rf public`
+3. Create production artifacts: `brunch build --production`
