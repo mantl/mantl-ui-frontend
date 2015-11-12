@@ -1,6 +1,6 @@
 module HealthTest where
 
-import Effects
+import Dict exposing (Dict)
 import ElmTest.Assertion exposing (assertEqual)
 import ElmTest.Test exposing (test, Test, suite)
 
@@ -10,16 +10,16 @@ import Health exposing (..)
 (initial, _) = init
 
 passing : HealthCheck
-passing = HealthCheck "node" "check-passing" "name" "passing" "notes" "output" "id" "service-name"
+passing = HealthCheck "node" "check-passing" "name" "passing" "notes" "output" "id" "passing-service"
 
 unknown : HealthCheck
-unknown = HealthCheck "node" "check-unknown" "name" "unknown" "notes" "output" "id" "service-name"
+unknown = HealthCheck "node" "check-unknown" "name" "unknown" "notes" "output" "id" "failing-service"
 
 warning : HealthCheck
-warning = HealthCheck "node" "check-warning" "name" "warning" "notes" "output" "id" "service-name"
+warning = HealthCheck "node" "check-warning" "name" "warning" "notes" "output" "id" "failing-service"
 
 critical : HealthCheck
-critical = HealthCheck "node" "check-critical" "name" "critical" "notes" "output" "id" "service-name"
+critical = HealthCheck "node" "check-critical" "name" "critical" "notes" "output" "id" "failing-service"
 
 -- tests
 testSoloUnhealthy : HealthCheck -> Test
@@ -81,25 +81,55 @@ updateTests =
                  in
                    assertEqual fx loadHealth) ] ]
 
--- updateTests : Test
--- updateTests =
---   suite "update"
---         [ suite "NewServices"
---                 [ test "services are set"
---                        (let
---                          services   = Just [ Service "test" "/test" ]
---                          action     = NewServices services
---                        in
---                          assertEqual
---                            (update action Nothing)
---                            (services, Effects.none)) ]
---         , suite "LoadServices"
---                 [ test "services are blanked out and action is returned"
---                        (assertEqual
---                           (update LoadServices (Just []))
---                           ((Just []), loadServices))] ]
+addHealthCheckTests : Test
+addHealthCheckTests =
+  suite "addHealthCheck"
+        [ test "nothing"
+               (assertEqual
+                  (addHealthCheck passing Nothing)
+                  (Just [ passing ]))
+        , test "something"
+               (assertEqual
+                  (addHealthCheck passing (Just [ passing ]))
+                  ( Just [ passing, passing ]))
+        , test "updates dict"
+               (assertEqual
+                (Dict.singleton "a" [ passing ] |> Dict.update "a" (addHealthCheck passing))
+                (Dict.singleton "a" [ passing, passing ])) ]
+
+updateHealthCheckDictTest : Test
+updateHealthCheckDictTest =
+  test "updateHealthCheckDict"
+       (assertEqual
+          (updateHealthCheckDict .serviceName passing Dict.empty)
+          (Dict.singleton (.serviceName passing) [ passing ]))
+
+groupByTests : Test
+groupByTests =
+  suite "groupBy"
+        [ test "no health checks"
+               (assertEqual
+                  (groupBy .serviceName [ ])
+                  Dict.empty)
+        , test "a single health check"
+               (assertEqual
+                  (groupBy .serviceName [ passing ])
+                  (Dict.singleton (.serviceName passing) [ passing ]))
+        , test "two same health checks"
+               (assertEqual
+                  (groupBy .serviceName [ passing, passing ])
+                  (Dict.singleton (.serviceName passing) [ passing, passing ]))
+        , test "two different health checks"
+               (assertEqual
+                  (groupBy .serviceName [ passing, warning ])
+                  (Dict.empty
+                    |> Dict.insert (.serviceName passing) [ passing ]
+                    |> Dict.insert (.serviceName warning) [ warning ]))]
 
 -- tests
 tests : Test
 tests =
-  suite "health" [ updateTests ]
+  suite "health" [ updateTests
+                 , addHealthCheckTests
+                 , updateHealthCheckDictTest
+                 , groupByTests ]

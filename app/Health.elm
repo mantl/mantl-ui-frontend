@@ -1,10 +1,13 @@
 module Health where
 
+import Attributes exposing (classes)
+import Dict exposing (Dict)
 import Effects exposing (Effects)
 import Html exposing (..)
 import Html.Attributes exposing (class)
 import Http
 import Json.Decode exposing (Decoder, list, object8, string, (:=))
+import List exposing ((::))
 import Task
 
 -- MODEL
@@ -91,3 +94,19 @@ view address model =
   in
     div [ class "row" ]
         [ content ]
+
+-- UTILITIES
+
+addHealthCheck : HealthCheck -> Maybe HealthChecks -> Maybe HealthChecks
+addHealthCheck check val =
+  case val of
+    Nothing     -> Just [ check ]
+    Just checks -> Just (check :: checks)
+
+updateHealthCheckDict : (HealthCheck -> String) -> HealthCheck -> Dict String HealthChecks -> Dict String HealthChecks
+updateHealthCheckDict selector check checks =
+  Dict.update (selector check) (addHealthCheck check) checks
+
+groupBy : (HealthCheck -> String) -> HealthChecks -> Dict String HealthChecks
+groupBy selector checks =
+  List.foldl (updateHealthCheckDict selector) Dict.empty checks
