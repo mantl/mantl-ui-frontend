@@ -1,4 +1,10 @@
-# Mantl-UI frontend
+# Mantl UI frontend
+
+A frontend for [Mantl UI](https://github.com/CiscoCloud/nginx-mantlui).
+
+It looks a bit like this:
+
+![Mantl UI Frontend](screenshot.png)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
 **Table of Contents**
