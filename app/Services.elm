@@ -60,7 +60,8 @@ serviceView : Signal.Address Action -> Service -> Html
 serviceView address service =
   div [ classes [ "col-sm-3", "service" ] ]
       [ div [ classes [ "card", "card-block" ] ]
-            [ h4 [ class "card-title"] [ text service.name ]
+            [ div [ class "logo" ] [ div [ class service.name ] [ ] ]
+            , h4 [ class "card-title"] [ text service.name ]
             , a [ classes [ "btn", "btn-block", "btn-primary" ]
                 , href service.path ]
                 [ text "Web UI" ] ] ]
