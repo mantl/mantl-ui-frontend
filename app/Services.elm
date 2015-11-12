@@ -3,7 +3,7 @@ module Services where
 import Attributes exposing (classes)
 import Effects exposing (Effects)
 import Html exposing (..)
-import Html.Attributes exposing (href, class, src)
+import Html.Attributes exposing (href, class)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing ((:=), Decoder, object2, string, list)
