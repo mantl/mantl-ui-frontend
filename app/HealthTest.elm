@@ -147,10 +147,18 @@ groupByTests =
 
 displayGroupingTest : Test
 displayGroupingTest =
-  test "displayGrouping"
-       (assertEqual
-         (groupBy .serviceName [ passing, warning ])
-         (displayGrouping [ passing, warning ]))
+  suite "displayGrouping"
+        [ test "is equivalent to `groupby .serviceName`"
+                (assertEqual
+                   (groupBy .serviceName [ passing ])
+                   (displayGrouping [ passing ]))
+        , test "sets consul name if key is blank"
+                (let
+                  consul = Check "node" "id" "name" Passing "notes" "output" "id" ""
+                in
+                  assertEqual
+                    (displayGrouping [ consul ])
+                    (Dict.fromList [ ("consul", [ consul ]) ])) ]
 
 isFocusedTests : Test
 isFocusedTests =

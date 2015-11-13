@@ -141,7 +141,7 @@ checkSelector address name checks active =
                 , (worstStatus checks |> statusToClass, True)
                 , ("active", active) ]
     , onClick address (Focus name) ]
-    [ text (if name == "" then "consul" else name) ]
+    [ text name ]
 
 checkDetail : Signal.Address Action -> Check -> Html
 checkDetail address check =
@@ -175,7 +175,7 @@ view address model =
                 div [ ]
                     [ h1 [ ]
                          [ healthDot (worstStatus checks)
-                         , text (if name == "" then "consul" else name) ]
+                         , text name ]
                     , div [ class "checks" ]
                           (List.map (checkDetail address) checks) ]
         in
@@ -215,7 +215,15 @@ groupBy selector checks =
   List.foldl (updateCheckDict selector) Dict.empty checks
 
 displayGrouping : Checks -> Dict String Checks
-displayGrouping = groupBy .serviceName
+displayGrouping checks =
+  checks
+    |> groupBy .serviceName
+    |> Dict.toList
+    |> List.map (\ (k, v) ->
+                  if k == ""
+                  then ("consul", v)
+                  else (k, v))
+    |> Dict.fromList
 
 hasNotes : Check -> Bool
 hasNotes check = check.notes /= ""
