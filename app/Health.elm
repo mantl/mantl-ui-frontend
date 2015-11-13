@@ -1,15 +1,16 @@
 module Health where
 
-import Debug
 import Attributes exposing (classes)
+import Debug
 import Dict exposing (Dict)
 import Effects exposing (Effects)
 import Html exposing (..)
 import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode exposing (Decoder, list, object8, string, (:=))
+import Json.Decode exposing (Decoder, list, object8, string, (:=), customDecoder)
 import List exposing ((::))
+import Result
 import Task
 
 -- MODEL
@@ -17,11 +18,18 @@ import Task
 type alias Check = { node : String
                    , checkID : String
                    , name : String
-                   , status : String
+                   , status : Status
                    , notes : String
                    , output : String
                    , serviceID : String
                    , serviceName : String }
+
+type Status
+  = Passing
+  | Unknown
+  | Warning
+  | Critical
+  | Other String
 
 type alias Checks = List Check
 
@@ -83,11 +91,21 @@ healthCheckDecoder = object8 Check
                              ("Node" := string)
                              ("CheckID" := string)
                              ("Name" := string)
-                             ("Status" := string)
+                             ("Status" := statusDecoder)
                              ("Notes" := string)
                              ("Output" := string)
                              ("ServiceID" := string)
                              ("ServiceName" := string)
+
+statusDecoder : Decoder Status
+statusDecoder =
+  customDecoder string <| \status ->
+    case status of
+      "passing"  -> Result.Ok Passing
+      "unknown"  -> Result.Ok Unknown
+      "warning"  -> Result.Ok Warning
+      "critical" -> Result.Ok Critical
+      _          -> Result.Ok (Other status)
 
 -- VIEW
 
@@ -125,7 +143,7 @@ checkDetail address check =
                   , ("healthy", isHealthy check)
                   , ("unhealthy", not (isHealthy check)) ] ]
       [ h2 [ ] [ text check.name ]
-      , attributes [ ("Status", check.status)
+      , attributes [ ("Status", check.status |> toString)
                    , ("Check ID", check.checkID)
                    , ("Node", check.node)
                    , ("Service ID", check.serviceID)
@@ -196,7 +214,7 @@ displayGrouping : Checks -> Dict String Checks
 displayGrouping = groupBy .serviceName
 
 isHealthy : Check -> Bool
-isHealthy check = check.status == "passing"
+isHealthy check = check.status == Passing
 
 allHealthy : List Check -> Bool
 allHealthy checks =

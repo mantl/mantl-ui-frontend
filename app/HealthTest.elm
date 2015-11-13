@@ -10,16 +10,16 @@ import Health exposing (..)
 (initial, _) = init
 
 passing : Check
-passing = Check "node" "check-passing" "name" "passing" "notes" "output" "id" "passing-service"
+passing = Check "node" "check-passing" "name" Passing "notes" "output" "id" "passing-service"
 
 unknown : Check
-unknown = Check "node" "check-unknown" "name" "unknown" "notes" "output" "id" "failing-service"
+unknown = Check "node" "check-unknown" "name" Unknown "notes" "output" "id" "failing-service"
 
 warning : Check
-warning = Check "node" "check-warning" "name" "warning" "notes" "output" "id" "failing-service"
+warning = Check "node" "check-warning" "name" Warning "notes" "output" "id" "failing-service"
 
 critical : Check
-critical = Check "node" "check-critical" "name" "critical" "notes" "output" "id" "failing-service"
+critical = Check "node" "check-critical" "name" Critical "notes" "output" "id" "failing-service"
 
 -- tests
 testSoloUnhealthy : Check -> Test
@@ -28,7 +28,7 @@ testSoloUnhealthy check =
     checks = [ check ]
     (updated, _) = update (NewChecks (Just checks)) initial
   in
-    test ("healthy is false if checks are all " ++ check.status) (assertEqual updated.healthy (Just False))
+    test ("healthy is false if checks are all " ++ (toString check.status)) (assertEqual updated.healthy (Just False))
 
 testMixedUnhealthy : Check -> Test
 testMixedUnhealthy check =
@@ -36,7 +36,7 @@ testMixedUnhealthy check =
     checks = Just [ passing, check ]
     (updated, _) = update (NewChecks checks) initial
   in
-    test ("healthy is false if checks are all " ++ check.status) (assertEqual updated.healthy (Just False))
+    test ("healthy is false if checks are mixed " ++ (toString check.status)) (assertEqual updated.healthy (Just False))
 
 unhealthyUpdateTests : List Test
 unhealthyUpdateTests =
