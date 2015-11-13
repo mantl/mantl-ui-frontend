@@ -36,14 +36,14 @@ type alias Checks = List Check
 
 type alias Focus = (String, Maybe Checks)
 
-type alias Model = { status : Maybe Status
+type alias Model = { status : Status
                    , checks : Checks
                    , error : Maybe String
                    , focus : Maybe Focus }
 
 init : ( Model, Effects Action )
 init =
-  ( { status = Nothing
+  ( { status = Unknown
     , checks = [ ]
     , error = Nothing
     , focus = Nothing }
@@ -64,7 +64,7 @@ update action model =
 
     NewChecks (Just checks) ->
       ( { model | checks <- checks
-                , status <- Just (worstStatus checks)
+                , status <- worstStatus checks
                 , error <- Nothing }
       , Effects.none)
 

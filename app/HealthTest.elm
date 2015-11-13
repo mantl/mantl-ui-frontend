@@ -31,7 +31,7 @@ testSoloUnhealthy check =
     checks = [ check ]
     (updated, _) = update (NewChecks (Just checks)) initial
   in
-    test ("health is worst of single " ++ (toString check.status)) (assertEqual updated.status (Just check.status))
+    test ("health is worst of single " ++ (toString check.status)) (assertEqual updated.status check.status)
 
 testMixedUnhealthy : Check -> Test
 testMixedUnhealthy check =
@@ -39,7 +39,7 @@ testMixedUnhealthy check =
     checks = Just [ passing, check ]
     (updated, _) = update (NewChecks checks) initial
   in
-    test ("health is worst of mixed " ++ (toString check.status)) (assertEqual updated.status (Just check.status))
+    test ("health is worst of mixed " ++ (toString check.status)) (assertEqual updated.status check.status)
 
 unhealthyUpdateTests : List Test
 unhealthyUpdateTests =
@@ -63,7 +63,7 @@ updateTests =
                           checks = [ passing ]
                           (updated, _) = update (NewChecks (Just checks)) initial
                         in
-                          assertEqual updated.status (Just passing.status))
+                          assertEqual updated.status passing.status)
                  , test "a null value sets an error"
                         (let
                           checks = Nothing
