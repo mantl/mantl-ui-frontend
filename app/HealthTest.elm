@@ -9,32 +9,32 @@ import Health exposing (..)
 -- fixtures
 (initial, _) = init
 
-passing : HealthCheck
-passing = HealthCheck "node" "check-passing" "name" "passing" "notes" "output" "id" "passing-service"
+passing : Check
+passing = Check "node" "check-passing" "name" "passing" "notes" "output" "id" "passing-service"
 
-unknown : HealthCheck
-unknown = HealthCheck "node" "check-unknown" "name" "unknown" "notes" "output" "id" "failing-service"
+unknown : Check
+unknown = Check "node" "check-unknown" "name" "unknown" "notes" "output" "id" "failing-service"
 
-warning : HealthCheck
-warning = HealthCheck "node" "check-warning" "name" "warning" "notes" "output" "id" "failing-service"
+warning : Check
+warning = Check "node" "check-warning" "name" "warning" "notes" "output" "id" "failing-service"
 
-critical : HealthCheck
-critical = HealthCheck "node" "check-critical" "name" "critical" "notes" "output" "id" "failing-service"
+critical : Check
+critical = Check "node" "check-critical" "name" "critical" "notes" "output" "id" "failing-service"
 
 -- tests
-testSoloUnhealthy : HealthCheck -> Test
+testSoloUnhealthy : Check -> Test
 testSoloUnhealthy check =
   let
     checks = Just [ check ]
-    (updated, _) = update (NewHealthChecks checks) initial
+    (updated, _) = update (NewChecks checks) initial
   in
     test ("healthy is false if checks are all " ++ check.status) (assertEqual updated.healthy (Just False))
 
-testMixedUnhealthy : HealthCheck -> Test
+testMixedUnhealthy : Check -> Test
 testMixedUnhealthy check =
   let
     checks = Just [ passing, check ]
-    (updated, _) = update (NewHealthChecks checks) initial
+    (updated, _) = update (NewChecks checks) initial
   in
     test ("healthy is false if checks are all " ++ check.status) (assertEqual updated.healthy (Just False))
 
@@ -48,60 +48,60 @@ unhealthyUpdateTests =
 updateTests : Test
 updateTests =
   suite "update"
-        [ suite "NewHealthChecks"
+        [ suite "NewChecks"
                 ([ test "new health checks are set"
                         (let
                           checks = Just [ passing ]
-                          (updated, _) = update (NewHealthChecks checks) initial
+                          (updated, _) = update (NewChecks checks) initial
                         in
                           assertEqual updated.checks checks)
                  , test "healthy is false if all the checks are healthy"
                         (let
                           checks = Just [ passing ]
-                          (updated, _) = update (NewHealthChecks checks) initial
+                          (updated, _) = update (NewChecks checks) initial
                         in
                           assertEqual updated.healthy (Just True))
                  , test "a null value sets an error"
                         (let
                           checks = Nothing
-                          (updated, _) = update (NewHealthChecks checks) initial
+                          (updated, _) = update (NewChecks checks) initial
                         in
                           assertEqual updated.error (Just "Could not retrieve health checks"))
                  , test "a just value unsets an error"
                         (let
                           errored = { initial | error <- Just "test" }
-                          (updated, _) = update (NewHealthChecks (Just [ passing ])) errored
+                          (updated, _) = update (NewChecks (Just [ passing ])) errored
                         in
                           assertEqual updated.error Nothing)
                  ] ++ unhealthyUpdateTests)
-        , suite "LoadHealthChecks"
+        , suite "LoadChecks"
           [ test "new health checks are loaded"
                  (let
-                   (_, fx) = update LoadHealthChecks initial
+                   (_, fx) = update LoadChecks initial
                  in
                    assertEqual fx loadHealth) ] ]
 
-addHealthCheckTests : Test
-addHealthCheckTests =
-  suite "addHealthCheck"
+addCheckTests : Test
+addCheckTests =
+  suite "addCheck"
         [ test "nothing"
                (assertEqual
-                  (addHealthCheck passing Nothing)
+                  (addCheck passing Nothing)
                   (Just [ passing ]))
         , test "something"
                (assertEqual
-                  (addHealthCheck passing (Just [ passing ]))
+                  (addCheck passing (Just [ passing ]))
                   ( Just [ passing, passing ]))
         , test "updates dict"
                (assertEqual
-                (Dict.singleton "a" [ passing ] |> Dict.update "a" (addHealthCheck passing))
+                (Dict.singleton "a" [ passing ] |> Dict.update "a" (addCheck passing))
                 (Dict.singleton "a" [ passing, passing ])) ]
 
-updateHealthCheckDictTest : Test
-updateHealthCheckDictTest =
-  test "updateHealthCheckDict"
+updateCheckDictTest : Test
+updateCheckDictTest =
+  test "updateCheckDict"
        (assertEqual
-          (updateHealthCheckDict .serviceName passing Dict.empty)
+          (updateCheckDict .serviceName passing Dict.empty)
           (Dict.singleton (.serviceName passing) [ passing ]))
 
 groupByTests : Test
@@ -130,6 +130,6 @@ groupByTests =
 tests : Test
 tests =
   suite "health" [ updateTests
-                 , addHealthCheckTests
-                 , updateHealthCheckDictTest
+                 , addCheckTests
+                 , updateCheckDictTest
                  , groupByTests ]

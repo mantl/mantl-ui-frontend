@@ -12,19 +12,19 @@ import Task
 
 -- MODEL
 
-type alias HealthCheck = { node : String
-                         , checkID : String
-                         , name : String
-                         , status : String
-                         , notes : String
-                         , output : String
-                         , serviceID : String
-                         , serviceName : String }
+type alias Check = { node : String
+                   , checkID : String
+                   , name : String
+                   , status : String
+                   , notes : String
+                   , output : String
+                   , serviceID : String
+                   , serviceName : String }
 
-type alias HealthChecks = List HealthCheck
+type alias Checks = List Check
 
 type alias Model = { healthy : Maybe Bool
-                   , checks : Maybe HealthChecks
+                   , checks : Maybe Checks
                    , error : Maybe String }
 
 init : ( Model, Effects Action )
@@ -37,25 +37,25 @@ init =
 -- UPDATE
 
 type Action
-  = NewHealthChecks (Maybe HealthChecks)
-  | LoadHealthChecks
+  = NewChecks (Maybe Checks)
+  | LoadChecks
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
   case action of
-    NewHealthChecks Nothing ->
+    NewChecks Nothing ->
       ( { model | error <- Just "Could not retrieve health checks" }, Effects.none )
 
-    NewHealthChecks (Just checks) ->
+    NewChecks (Just checks) ->
       ( { model | checks <- Just checks
                 , healthy <- Just (allHealthy checks)
                 , error <- Nothing }
       , Effects.none)
 
-    LoadHealthChecks ->
+    LoadChecks ->
       ( model, loadHealth )
 
-allHealthy : List HealthCheck -> Bool
+allHealthy : List Check -> Bool
 allHealthy checks =
   checks |> List.all (\c -> c.status == "passing")
 
@@ -65,11 +65,11 @@ loadHealth : Effects Action
 loadHealth =
   Http.get (list healthCheckDecoder) "/consul/v1/health/state/any"
       |> Task.toMaybe
-      |> Task.map NewHealthChecks
+      |> Task.map NewChecks
       |> Effects.task
 
-healthCheckDecoder : Decoder HealthCheck
-healthCheckDecoder = object8 HealthCheck
+healthCheckDecoder : Decoder Check
+healthCheckDecoder = object8 Check
                              ("Node" := string)
                              ("CheckID" := string)
                              ("Name" := string)
@@ -97,16 +97,16 @@ view address model =
 
 -- UTILITIES
 
-addHealthCheck : HealthCheck -> Maybe HealthChecks -> Maybe HealthChecks
-addHealthCheck check val =
+addCheck : Check -> Maybe Checks -> Maybe Checks
+addCheck check val =
   case val of
     Nothing     -> Just [ check ]
     Just checks -> Just (check :: checks)
 
-updateHealthCheckDict : (HealthCheck -> String) -> HealthCheck -> Dict String HealthChecks -> Dict String HealthChecks
-updateHealthCheckDict selector check checks =
-  Dict.update (selector check) (addHealthCheck check) checks
+updateCheckDict : (Check -> String) -> Check -> Dict String Checks -> Dict String Checks
+updateCheckDict selector check checks =
+  Dict.update (selector check) (addCheck check) checks
 
-groupBy : (HealthCheck -> String) -> HealthChecks -> Dict String HealthChecks
+groupBy : (Check -> String) -> Checks -> Dict String Checks
 groupBy selector checks =
-  List.foldl (updateHealthCheckDict selector) Dict.empty checks
+  List.foldl (updateCheckDict selector) Dict.empty checks
