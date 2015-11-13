@@ -10,7 +10,7 @@ import String exposing (split)
 
 type Location
   = Home
-  | HealthPage
+  | HealthOverview
 
 type alias Model = Maybe Location
 
@@ -34,8 +34,8 @@ urlFor loc =
   let
     url =
       case loc of
-        Home       -> "/"
-        HealthPage -> "/health/"
+        Home           -> "/"
+        HealthOverview -> "/health/"
   in
     "#" ++ url
 
@@ -49,7 +49,7 @@ locFor path =
   in
     case segments of
       []         -> Just Home
-      ["health"] -> Just HealthPage
+      ["health"] -> Just HealthOverview
       _          -> Nothing
 
 -- VIEW
@@ -80,4 +80,4 @@ view address model =
                   [ text "Mantl" ]
               , ul [ classes [ "nav", "navbar-nav" ] ]
                    [ link Home "Home"
-                   , link HealthPage "Health" ] ] ]
+                   , link HealthOverview "Health" ] ] ]

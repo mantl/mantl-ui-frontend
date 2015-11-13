@@ -87,7 +87,7 @@ view address model =
       case model.route of
         Just (Route.Home) ->
           Services.view (Signal.forwardTo address ServicesAction) model.services
-        Just (Route.HealthPage) ->
+        Just (Route.HealthOverview) ->
           Health.view (Signal.forwardTo address HealthAction) model.health
         Nothing -> Route.notfound
   in
