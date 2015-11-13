@@ -142,10 +142,18 @@ groupByTests =
                     |> Dict.insert (.serviceName passing) [ passing ]
                     |> Dict.insert (.serviceName warning) [ warning ]))]
 
+displayGroupingTest : Test
+displayGroupingTest =
+  test "displayGrouping"
+       (assertEqual
+         (groupBy .serviceName [ passing, warning ])
+         (displayGrouping [ passing, warning ]))
+
 -- tests
 tests : Test
 tests =
   suite "health" [ updateTests
                  , addCheckTests
                  , updateCheckDictTest
-                 , groupByTests ]
+                 , groupByTests
+                 , displayGroupingTest ]
