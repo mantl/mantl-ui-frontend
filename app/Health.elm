@@ -125,10 +125,9 @@ statusToString status =
     Other o -> "Unknown Status: " ++ o
     _       -> toString status
 
-healthDot : Status -> Html
-healthDot status =
-  span [ classList [ ("healthdot", True)
-                   , (statusToClass status, True) ] ]
+healthDot : Status -> String -> Html
+healthDot status size =
+  span [ classes [ "healthdot", size, statusToClass status ] ]
        [ status |> statusToString |> text ]
 
 attributes : List (String, String) -> Html
@@ -180,7 +179,7 @@ view address model =
               Just (name, Just checks)  ->
                 div [ ]
                     [ h1 [ ]
-                         [ healthDot (worstStatus checks)
+                         [ healthDot (worstStatus checks) "large"
                          , text name ]
                     , div [ class "checks" ]
                           (List.map (checkDetail address) checks) ]

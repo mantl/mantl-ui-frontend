@@ -95,7 +95,7 @@ view address model =
   in
     div [ class "app" ]
         [ Version.notification (Signal.forwardTo address VersionAction) model.version
-        , Route.view (Signal.forwardTo address RouteAction) model.route
+        , Route.view (Signal.forwardTo address RouteAction) model.route model.health
         , div [ classes [ "container", "content" ] ]
               [ body
               , Version.view (Signal.forwardTo address VersionAction) model.version ] ]
