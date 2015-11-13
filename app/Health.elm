@@ -10,6 +10,7 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, object8, string, (:=), customDecoder)
 import List exposing ((::))
+import Maybe
 import Result
 import Task
 
@@ -35,14 +36,14 @@ type alias Checks = List Check
 
 type alias Focus = (String, Maybe Checks)
 
-type alias Model = { healthy : Maybe Bool
+type alias Model = { status : Maybe Status
                    , checks : Checks
                    , error : Maybe String
                    , focus : Maybe Focus }
 
 init : ( Model, Effects Action )
 init =
-  ( { healthy = Nothing
+  ( { status = Nothing
     , checks = [ ]
     , error = Nothing
     , focus = Nothing }
@@ -63,7 +64,7 @@ update action model =
 
     NewChecks (Just checks) ->
       ( { model | checks <- checks
-                , healthy <- Just (allHealthy checks)
+                , status <- Just (worstStatus checks)
                 , error <- Nothing }
       , Effects.none)
 
@@ -109,12 +110,20 @@ statusDecoder =
 
 -- VIEW
 
-healthDot : Bool -> Html
-healthDot healthy =
+statusToClass : Status -> String
+statusToClass status =
+  case status of
+    Passing  -> "passing"
+    Unknown  -> "unknown"
+    Warning  -> "warning"
+    Critical -> "critical"
+    Other _  -> "other"
+
+healthDot : Status -> Html
+healthDot status =
   span [ classList [ ("healthdot", True)
-                   , ("healthy", healthy)
-                   , ("unhealthy", not healthy) ] ]
-       [ text (if healthy then "healthy" else "unhealthy") ]
+                   , (statusToClass status, True) ] ]
+       [ status |> toString |> text ]
 
 attributes : List (String, String) -> Html
 attributes attrs =
@@ -129,19 +138,14 @@ checkSelector address name checks active =
   p [ classList [ ("service", True)
                 , ("card", True)
                 , ("card-block", True)
-                , ("healthy", allHealthy checks)
-                , ("unhealthy", not (allHealthy checks))
+                , (worstStatus checks |> statusToClass, True)
                 , ("active", active) ]
     , onClick address (Focus name) ]
     [ text (if name == "" then "consul" else name) ]
 
 checkDetail : Signal.Address Action -> Check -> Html
 checkDetail address check =
-  div [ classList [ ("check", True)
-                  , ("card", True)
-                  , ("card-block", True)
-                  , ("healthy", isHealthy check)
-                  , ("unhealthy", not (isHealthy check)) ] ]
+  div [ classes [ "check", "card", "card-block", statusToClass check.status ] ]
       [ h2 [ ] [ text check.name ]
       , attributes [ ("Status", check.status |> toString)
                    , ("Check ID", check.checkID)
@@ -170,7 +174,7 @@ view address model =
               Just (name, Just checks)  ->
                 div [ ]
                     [ h1 [ ]
-                         [ healthDot (allHealthy checks)
+                         [ healthDot (worstStatus checks)
                          , text (if name == "" then "consul" else name) ]
                     , div [ class "checks" ]
                           (List.map (checkDetail address) checks) ]
@@ -213,13 +217,6 @@ groupBy selector checks =
 displayGrouping : Checks -> Dict String Checks
 displayGrouping = groupBy .serviceName
 
-isHealthy : Check -> Bool
-isHealthy check = check.status == Passing
-
-allHealthy : List Check -> Bool
-allHealthy checks =
-  checks |> List.all isHealthy
-
 hasNotes : Check -> Bool
 hasNotes check = check.notes /= ""
 
@@ -228,3 +225,18 @@ isFocused name focus =
   case focus of
     Nothing         -> False
     Just (other, _) -> name == other
+
+worstStatus : Checks -> Status
+worstStatus checks =
+  checks
+    |> List.map .status
+    |> List.sortBy
+         (\s ->
+           case s of
+             Critical -> 0
+             Warning  -> 1
+             Unknown  -> 2
+             Passing  -> 3
+             Other _  -> 4)
+    |> List.head
+    |> Maybe.withDefault Unknown

@@ -21,6 +21,9 @@ warning = Check "node" "check-warning" "name" Warning "notes" "output" "id" "fai
 critical : Check
 critical = Check "node" "check-critical" "name" Critical "notes" "output" "id" "failing-service"
 
+other : Check
+other = Check "node" "check-other" "name" (Other "other") "notes" "output" "id" "failing-service"
+
 -- tests
 testSoloUnhealthy : Check -> Test
 testSoloUnhealthy check =
@@ -28,7 +31,7 @@ testSoloUnhealthy check =
     checks = [ check ]
     (updated, _) = update (NewChecks (Just checks)) initial
   in
-    test ("healthy is false if checks are all " ++ (toString check.status)) (assertEqual updated.healthy (Just False))
+    test ("health is worst of single " ++ (toString check.status)) (assertEqual updated.status (Just check.status))
 
 testMixedUnhealthy : Check -> Test
 testMixedUnhealthy check =
@@ -36,7 +39,7 @@ testMixedUnhealthy check =
     checks = Just [ passing, check ]
     (updated, _) = update (NewChecks checks) initial
   in
-    test ("healthy is false if checks are mixed " ++ (toString check.status)) (assertEqual updated.healthy (Just False))
+    test ("health is worst of mixed " ++ (toString check.status)) (assertEqual updated.status (Just check.status))
 
 unhealthyUpdateTests : List Test
 unhealthyUpdateTests =
@@ -60,7 +63,7 @@ updateTests =
                           checks = [ passing ]
                           (updated, _) = update (NewChecks (Just checks)) initial
                         in
-                          assertEqual updated.healthy (Just True))
+                          assertEqual updated.status (Just passing.status))
                  , test "a null value sets an error"
                         (let
                           checks = Nothing
@@ -159,6 +162,29 @@ isFocusedTests =
         , test "nothing"
                (assert (not (isFocused passing.name Nothing)))]
 
+trumps : Check -> Check -> Test
+trumps trump other =
+  test ((toString trump) ++ " trumps " ++ (toString other))
+       (assertEqual
+          (worstStatus [ other, trump, other ])
+          trump.status)
+
+worstStatusTests : Test
+worstStatusTests =
+  suite "worstStatus"
+        [ suite "critical is worst of all"
+                (List.map (trumps critical) [ warning, unknown, passing, other ])
+        , suite "warning is worst of all but critical"
+                (List.map (trumps warning) [ unknown, passing, other ])
+        , suite "unknown is middle-of-the-road"
+                (List.map (trumps unknown) [ passing, other ])
+        , suite "passing is second to best"
+                [ trumps passing other ]
+        , suite "other doesn't beat anything"
+                (List.map (\o -> trumps o other) [ critical, warning, unknown, passing ])
+        , test "an empty list returns Unknown"
+                (assertEqual (worstStatus [ ]) Unknown) ]
+
 -- tests
 tests : Test
 tests =
@@ -167,4 +193,5 @@ tests =
                  , updateCheckDictTest
                  , groupByTests
                  , displayGroupingTest
-                 , isFocusedTests ]
+                 , isFocusedTests
+                 , worstStatusTests ]

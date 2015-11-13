@@ -137,12 +137,17 @@ body {
         box-shadow: 0 0 2px $gray;
         background-color: $gray;
 
-        &.healthy {
+        &.passing {
             box-shadow: 0 0 2px $brand-success;
             background-color: $brand-success;
         }
 
-        &.unhealthy {
+        &.warning {
+            box-shadow: 0 0 2px $brand-warning;
+            background-color: $brand-warning;
+        }
+
+        &.critical {
             box-shadow: 0 0 2px $brand-danger;
             background-color: $brand-danger;
         }
@@ -152,8 +157,9 @@ body {
         border-color: $gray;
         border-left-width: .5rem;
 
-        &.healthy { border-color: $brand-success; }
-        &.unhealthy { border-color: $brand-danger; }
+        &.passing { border-color: $brand-success; }
+        &.warning { border-color: $brand-warning; }
+        &.critical { border-color: $brand-danger; }
     }
 
     .service {
@@ -162,8 +168,9 @@ body {
         &.active {
             border-color: $gray * 1.2;
 
-            &.healthy { border-color: $brand-success * 1.2; }
-            &.unhealthy { border-color: $brand-danger * 1.2; }
+            &.passing { border-color: $brand-success * 1.2; }
+            &.warning { border-color: $brand-warning * 1.2; }
+            &.critical { border-color: $brand-danger * 1.2; }
         }
     }
 
