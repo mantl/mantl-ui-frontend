@@ -1,6 +1,8 @@
 @import 'mixins.scss';
-@import 'vendor/bootstrap/variables.scss';
+@import 'vendor/bootstrap/mixins/buttons.scss';
 @import 'vendor/bootstrap/mixins/grid.scss';
+@import 'vendor/bootstrap/mixins/hover.scss';
+@import 'vendor/bootstrap/variables.scss';
 
 /* general */
 body {
@@ -192,5 +194,19 @@ body {
             border-radius: 5px;
             padding: 15px;
         }
+    }
+}
+
+.btn-health {
+    &.passing {
+        @include button-outline-variant($brand-success);
+    }
+
+    &.warning {
+        @include button-outline-variant($brand-warning);
+    }
+
+    &.critical {
+        @include button-outline-variant($brand-danger);
     }
 }

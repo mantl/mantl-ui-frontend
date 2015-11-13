@@ -86,9 +86,11 @@ view address model =
     body =
       case model.route of
         Just (Route.Home) ->
-          Services.view (Signal.forwardTo address ServicesAction) model.services
+          Services.view (Signal.forwardTo address ServicesAction) model.services model.health
+
         Just (Route.HealthOverview) ->
           Health.view (Signal.forwardTo address HealthAction) model.health
+
         Nothing -> Route.notfound
   in
     div [ class "app" ]

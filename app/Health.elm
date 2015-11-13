@@ -248,3 +248,6 @@ worstStatus checks =
              Other _  -> 4)
     |> List.head
     |> Maybe.withDefault Unknown
+
+statusForService : String -> Model -> Status
+statusForService name = .checks >> displayGrouping >> Dict.get name >> Maybe.withDefault [ ] >> worstStatus

@@ -2,11 +2,13 @@ module Services where
 
 import Attributes exposing (classes)
 import Effects exposing (Effects)
+import Health
 import Html exposing (..)
 import Html.Attributes exposing (href, class)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing ((:=), Decoder, object2, string, list)
+import Route
 import Signal
 import Task
 
@@ -56,18 +58,21 @@ serviceDecoder = object2 Service
 
 -- VIEW
 
-serviceView : Signal.Address Action -> Service -> Html
-serviceView address service =
+serviceView : Signal.Address Action -> Health.Status -> Service -> Html
+serviceView address health service =
   div [ classes [ "col-sm-3", "service" ] ]
       [ div [ classes [ "card", "card-block" ] ]
             [ div [ class "logo" ] [ div [ class service.name ] [ ] ]
             , h4 [ class "card-title"] [ text service.name ]
             , a [ classes [ "btn", "btn-block", "btn-primary" ]
                 , href service.path ]
-                [ text "Web UI" ] ] ]
+                [ text "Web UI" ]
+            , a [ classes [ "btn", "btn-block", "btn-health", Health.statusToClass health ]
+                , href (Route.urlFor Route.HealthOverview)]
+                [ text ("Checks: " ++ (toString health))]] ]
 
-view : Signal.Address Action -> Model -> Html
-view address model =
+view : Signal.Address Action -> Model -> Health.Model -> Html
+view address model health =
   let
     content =
       case model of
@@ -82,7 +87,10 @@ view address model =
                                    , onClick address LoadServices ]
                                    [ text "Reload Services" ] ] ]
               , div [ classes [ "row", "services" ] ]
-                    (List.map (serviceView address) services) ]
+                    (services |> List.map (\s -> serviceView
+                                                   address
+                                                   (Health.statusForService s.name health)
+                                                   s)) ]
   in
     div [ class "row" ]
         [ content ]
