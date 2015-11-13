@@ -568,55 +568,5 @@
         "ServiceID": "mesos-consul:mesos:20151112-182214-50331658-15050-19550-S2:bh-worker-003",
         "ServiceName": "mesos",
         "Status": "passing"
-    },
-    {
-        "CheckID": "service:fake:passing",
-        "Name": "fake",
-        "Node": "fake-worker-001",
-        "Notes": "",
-        "Output": "passing",
-        "ServiceID": "service:fake",
-        "ServiceName": "fake",
-        "Status": "passing"
-    },
-    {
-        "CheckID": "service:fake:unknown",
-        "Name": "fake",
-        "Node": "fake-worker-001",
-        "Notes": "",
-        "Output": "unknown",
-        "ServiceID": "service:fake",
-        "ServiceName": "fake",
-        "Status": "unknown"
-    },
-    {
-        "CheckID": "service:fake:warning",
-        "Name": "fake",
-        "Node": "fake-worker-001",
-        "Notes": "",
-        "Output": "warning",
-        "ServiceID": "service:fake",
-        "ServiceName": "fake",
-        "Status": "warning"
-    },
-    {
-        "CheckID": "service:fake:critical",
-        "Name": "fake",
-        "Node": "fake-worker-001",
-        "Notes": "",
-        "Output": "critical",
-        "ServiceID": "service:fake",
-        "ServiceName": "fake",
-        "Status": "critical"
-    },
-    {
-        "CheckID": "service:fake:other",
-        "Name": "fake",
-        "Node": "fake-worker-001",
-        "Notes": "",
-        "Output": "other",
-        "ServiceID": "service:fake",
-        "ServiceName": "fake",
-        "Status": "other"
     }
 ]
