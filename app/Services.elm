@@ -69,7 +69,7 @@ serviceView address health service =
                 [ text "Web UI" ]
             , a [ classes [ "btn", "btn-block", "btn-health", Health.statusToClass health ]
                 , href (Route.urlFor Route.HealthOverview)]
-                [ text ("Checks: " ++ (toString health))]] ]
+                [ text ("Checks: " ++ (Health.statusToString health))]] ]
 
 view : Signal.Address Action -> Model -> Health.Model -> Html
 view address model health =

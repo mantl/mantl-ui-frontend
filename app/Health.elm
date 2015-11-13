@@ -119,11 +119,17 @@ statusToClass status =
     Critical -> "critical"
     Other _  -> "other"
 
+statusToString : Status -> String
+statusToString status =
+  case status of
+    Other o -> "Unknown Status: " ++ o
+    _       -> toString status
+
 healthDot : Status -> Html
 healthDot status =
   span [ classList [ ("healthdot", True)
                    , (statusToClass status, True) ] ]
-       [ status |> toString |> text ]
+       [ status |> statusToString |> text ]
 
 attributes : List (String, String) -> Html
 attributes attrs =
@@ -147,7 +153,7 @@ checkDetail : Signal.Address Action -> Check -> Html
 checkDetail address check =
   div [ classes [ "check", "card", "card-block", statusToClass check.status ] ]
       [ h2 [ ] [ text check.name ]
-      , attributes [ ("Status", check.status |> toString)
+      , attributes [ ("Status", check.status |> statusToString)
                    , ("Check ID", check.checkID)
                    , ("Node", check.node)
                    , ("Service ID", check.serviceID)
