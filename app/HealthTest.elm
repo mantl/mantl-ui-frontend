@@ -1,7 +1,7 @@
 module HealthTest where
 
 import Dict exposing (Dict)
-import ElmTest.Assertion exposing (assertEqual)
+import ElmTest.Assertion exposing (assert, assertEqual)
 import ElmTest.Test exposing (test, Test, suite)
 
 import Health exposing (..)
@@ -149,6 +149,16 @@ displayGroupingTest =
          (groupBy .serviceName [ passing, warning ])
          (displayGrouping [ passing, warning ]))
 
+isFocusedTests : Test
+isFocusedTests =
+  suite "isFocused"
+        [ test "focused"
+               (assert (isFocused passing.name (Just (passing.name, Nothing))))
+        , test "unfocused"
+               (assert (not (isFocused passing.name (Just ("not", Nothing)))))
+        , test "nothing"
+               (assert (not (isFocused passing.name Nothing)))]
+
 -- tests
 tests : Test
 tests =
@@ -156,4 +166,5 @@ tests =
                  , addCheckTests
                  , updateCheckDictTest
                  , groupByTests
-                 , displayGroupingTest ]
+                 , displayGroupingTest
+                 , isFocusedTests ]

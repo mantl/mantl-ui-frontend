@@ -158,6 +158,13 @@ body {
 
     .service {
         cursor: pointer;
+
+        &.active {
+            border-color: $gray * 1.2;
+
+            &.healthy { border-color: $brand-success * 1.2; }
+            &.unhealthy { border-color: $brand-danger * 1.2; }
+        }
     }
 
     .check {
@@ -167,7 +174,7 @@ body {
 
             .attribute {
                 @include make-col();
-                @include make-col-span(3);
+                @include make-col-span(2, 10);
                 text-align: center;
             }
         }

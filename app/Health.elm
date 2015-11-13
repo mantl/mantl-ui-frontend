@@ -25,10 +25,12 @@ type alias Check = { node : String
 
 type alias Checks = List Check
 
+type alias Focus = (String, Maybe Checks)
+
 type alias Model = { healthy : Maybe Bool
                    , checks : Checks
                    , error : Maybe String
-                   , focus : Maybe (String, Maybe Checks) }
+                   , focus : Maybe Focus }
 
 init : ( Model, Effects Action )
 init =
@@ -104,13 +106,14 @@ attributes attrs =
                                            [ dt [ ] [ text key ]
                                            , dd [ ] [ code [ ] [ text value ] ] ] ))
 
-checkSelector : Signal.Address Action -> String -> Checks -> Html
-checkSelector address name checks =
+checkSelector : Signal.Address Action -> String -> Checks -> Bool -> Html
+checkSelector address name checks active =
   p [ classList [ ("service", True)
                 , ("card", True)
                 , ("card-block", True)
                 , ("healthy", allHealthy checks)
-                , ("unhealthy", not (allHealthy checks)) ]
+                , ("unhealthy", not (allHealthy checks))
+                , ("active", active) ]
     , onClick address (Focus name) ]
     [ text (if name == "" then "consul" else name) ]
 
@@ -122,7 +125,8 @@ checkDetail address check =
                   , ("healthy", isHealthy check)
                   , ("unhealthy", not (isHealthy check)) ] ]
       [ h2 [ ] [ text check.name ]
-      , attributes [ ("Check ID", check.checkID)
+      , attributes [ ("Status", check.status)
+                   , ("Check ID", check.checkID)
                    , ("Node", check.node)
                    , ("Service ID", check.serviceID)
                    , ("Service Name", check.serviceName) ]
@@ -164,7 +168,9 @@ view address model =
                           (groups
                              |> Dict.toList
                              |> List.map (\ (name, checks) ->
-                                            checkSelector address name checks))
+                                            checkSelector
+                                              address name checks
+                                              (isFocused name model.focus)))
                     , div [ class "col-md-9" ] [ focusContent ] ] ]
   in
     div [ class "row" ]
@@ -198,3 +204,9 @@ allHealthy checks =
 
 hasNotes : Check -> Bool
 hasNotes check = check.notes /= ""
+
+isFocused : String -> Maybe Focus -> Bool
+isFocused name focus =
+  case focus of
+    Nothing         -> False
+    Just (other, _) -> name == other
