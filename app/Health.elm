@@ -1,10 +1,12 @@
 module Health where
 
+import Debug
 import Attributes exposing (classes)
 import Dict exposing (Dict)
 import Effects exposing (Effects)
 import Html exposing (..)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
+import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, object8, string, (:=))
 import List exposing ((::))
@@ -65,10 +67,6 @@ update action model =
       in
         ( { model | focus <- pair }, Effects.none )
 
-allHealthy : List Check -> Bool
-allHealthy checks =
-  checks |> List.all (\c -> c.status == "passing")
-
 -- ACTIONS
 
 loadHealth : Effects Action
@@ -91,16 +89,83 @@ healthCheckDecoder = object8 Check
 
 -- VIEW
 
+healthDot : Bool -> Html
+healthDot healthy =
+  span [ classList [ ("healthdot", True)
+                   , ("healthy", healthy)
+                   , ("unhealthy", not healthy) ] ]
+       [ text (if healthy then "healthy" else "unhealthy") ]
+
+attributes : List (String, String) -> Html
+attributes attrs =
+  dl [ class "attributes" ]
+     (attrs
+        |> List.map (\ (key, value) -> div [ class "attribute" ]
+                                           [ dt [ ] [ text key ]
+                                           , dd [ ] [ code [ ] [ text value ] ] ] ))
+
+checkSelector : Signal.Address Action -> String -> Checks -> Html
+checkSelector address name checks =
+  p [ classList [ ("service", True)
+                , ("card", True)
+                , ("card-block", True)
+                , ("healthy", allHealthy checks)
+                , ("unhealthy", not (allHealthy checks)) ]
+    , onClick address (Focus name) ]
+    [ text (if name == "" then "consul" else name) ]
+
+checkDetail : Signal.Address Action -> Check -> Html
+checkDetail address check =
+  div [ classList [ ("check", True)
+                  , ("card", True)
+                  , ("card-block", True)
+                  , ("healthy", isHealthy check)
+                  , ("unhealthy", not (isHealthy check)) ] ]
+      [ h2 [ ] [ text check.name ]
+      , attributes [ ("Check ID", check.checkID)
+                   , ("Node", check.node)
+                   , ("Service ID", check.serviceID)
+                   , ("Service Name", check.serviceName) ]
+      , p [ classList [ ("notes", True)
+                      , ("hidden", not (hasNotes check |> Debug.log "has notes")) ] ]
+          [ strong [ ] [ text "Notes: " ], text check.notes ]
+      , p [ ] [ strong [ ] [ text "Output:" ] ]
+      , pre [ class "output" ] [ code [ ] [ text check.output ] ] ]
+
 view : Signal.Address Action -> Model -> Html
 view address model =
   let
     content =
-      case model.checks of
-        Nothing ->
-          p [ class "col-sm-12" ] [ text "No Health Checks loaded" ]
-
-        Just checks ->
-          div [ class "col-sm-12" ] [ checks |> toString |> text ]
+      if List.isEmpty model.checks
+      then p [ class "col-sm-12" ] [ text "No Health Checks loaded" ]
+      else
+        let
+          groups = model.checks |> displayGrouping
+          focusContent =
+            case model.focus of
+              Nothing                   -> div [ ] [ ]
+              Just (name, Nothing)      -> div [ ] [ ]
+              Just (name, Just checks)  ->
+                div [ ]
+                    [ h1 [ ]
+                         [ healthDot (allHealthy checks)
+                         , text (if name == "" then "consul" else name) ]
+                    , div [ class "checks" ]
+                          (List.map (checkDetail address) checks) ]
+        in
+          div [ class "col-sm-12" ]
+              [ div [ classes [ "row", "controls" ] ]
+                    [ div [ class "col-sm-12" ]
+                          [ button [ classes [ "btn", "btn-sm", "btn-secondary" ]
+                                   , onClick address LoadChecks ]
+                                   [ text "Reload Health Checks" ] ] ]
+              , div [ classes [ "row", "healthchecks" ] ]
+                    [ div [ classes [ "services", "col-md-3" ] ]
+                          (groups
+                             |> Dict.toList
+                             |> List.map (\ (name, checks) ->
+                                            checkSelector address name checks))
+                    , div [ class "col-md-9" ] [ focusContent ] ] ]
   in
     div [ class "row" ]
         [ content ]
@@ -123,3 +188,13 @@ groupBy selector checks =
 
 displayGrouping : Checks -> Dict String Checks
 displayGrouping = groupBy .serviceName
+
+isHealthy : Check -> Bool
+isHealthy check = check.status == "passing"
+
+allHealthy : List Check -> Bool
+allHealthy checks =
+  checks |> List.all isHealthy
+
+hasNotes : Check -> Bool
+hasNotes check = check.notes /= ""

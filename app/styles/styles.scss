@@ -1,5 +1,6 @@
 @import 'mixins.scss';
 @import 'vendor/bootstrap/variables.scss';
+@import 'vendor/bootstrap/mixins/grid.scss';
 
 /* general */
 body {
@@ -20,6 +21,9 @@ body {
     background-color: rgba(253, 235, 202, 0.5);
     min-height: 100%;
     border-radius: 0 0 1rem 1rem;
+}
+.hidden {
+    display: none;
 }
 
 /* header */
@@ -45,12 +49,12 @@ body {
         color: $gray-lightest;
     }
 }
+.card {
+    background-color: $gray-lightest;
+}
 
 /* services */
 .service {
-    .card {
-        background-color: $gray-lightest;
-    }
 
     h4 {
         text-transform: capitalize;
@@ -111,4 +115,68 @@ body {
     background-color: $gray-lightest;
     padding: 2px;
     border-radius: 5px 0 0 0;
+}
+
+/* health checks */
+.healthchecks {
+    .healthdot {
+        // hide inner text
+        display: inline-block;
+        overflow: hidden;
+        text-indent: 100%;
+
+        // make a dot
+        border-radus: 15px;
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+
+        margin-right: 5px;
+
+        // colors
+        box-shadow: 0 0 2px $gray;
+        background-color: $gray;
+
+        &.healthy {
+            box-shadow: 0 0 2px $brand-success;
+            background-color: $brand-success;
+        }
+
+        &.unhealthy {
+            box-shadow: 0 0 2px $brand-danger;
+            background-color: $brand-danger;
+        }
+    }
+
+    .service, .check {
+        border-color: $gray;
+        border-left-width: .5rem;
+
+        &.healthy { border-color: $brand-success; }
+        &.unhealthy { border-color: $brand-danger; }
+    }
+
+    .service {
+        cursor: pointer;
+    }
+
+    .check {
+        .attributes {
+            @include make-row();
+            margin-bottom: 0;
+
+            .attribute {
+                @include make-col();
+                @include make-col-span(3);
+                text-align: center;
+            }
+        }
+
+        .output {
+            background-color: $gray;
+            color: $gray-lightest;
+            border-radius: 5px;
+            padding: 15px;
+        }
+    }
 }
