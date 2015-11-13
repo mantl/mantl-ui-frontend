@@ -24,14 +24,16 @@ type alias Check = { node : String
 type alias Checks = List Check
 
 type alias Model = { healthy : Maybe Bool
-                   , checks : Maybe Checks
-                   , error : Maybe String }
+                   , checks : Checks
+                   , error : Maybe String
+                   , focus : Maybe (String, Maybe Checks) }
 
 init : ( Model, Effects Action )
 init =
   ( { healthy = Nothing
-    , checks = Nothing
-    , error = Nothing }
+    , checks = [ ]
+    , error = Nothing
+    , focus = Nothing }
   , loadHealth )
 
 -- UPDATE
@@ -39,6 +41,7 @@ init =
 type Action
   = NewChecks (Maybe Checks)
   | LoadChecks
+  | Focus String
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
@@ -47,13 +50,20 @@ update action model =
       ( { model | error <- Just "Could not retrieve health checks" }, Effects.none )
 
     NewChecks (Just checks) ->
-      ( { model | checks <- Just checks
+      ( { model | checks <- checks
                 , healthy <- Just (allHealthy checks)
                 , error <- Nothing }
       , Effects.none)
 
     LoadChecks ->
       ( model, loadHealth )
+
+    Focus name ->
+      let
+        groups = displayGrouping model.checks
+        pair = Just (name, Dict.get name groups)
+      in
+        ( { model | focus <- pair }, Effects.none )
 
 allHealthy : List Check -> Bool
 allHealthy checks =
@@ -110,3 +120,6 @@ updateCheckDict selector check checks =
 groupBy : (Check -> String) -> Checks -> Dict String Checks
 groupBy selector checks =
   List.foldl (updateCheckDict selector) Dict.empty checks
+
+displayGrouping : Checks -> Dict String Checks
+displayGrouping = groupBy .serviceName

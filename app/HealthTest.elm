@@ -25,8 +25,8 @@ critical = Check "node" "check-critical" "name" "critical" "notes" "output" "id"
 testSoloUnhealthy : Check -> Test
 testSoloUnhealthy check =
   let
-    checks = Just [ check ]
-    (updated, _) = update (NewChecks checks) initial
+    checks = [ check ]
+    (updated, _) = update (NewChecks (Just checks)) initial
   in
     test ("healthy is false if checks are all " ++ check.status) (assertEqual updated.healthy (Just False))
 
@@ -51,14 +51,14 @@ updateTests =
         [ suite "NewChecks"
                 ([ test "new health checks are set"
                         (let
-                          checks = Just [ passing ]
-                          (updated, _) = update (NewChecks checks) initial
+                          checks = [ passing ]
+                          (updated, _) = update (NewChecks (Just checks)) initial
                         in
                           assertEqual updated.checks checks)
                  , test "healthy is false if all the checks are healthy"
                         (let
-                          checks = Just [ passing ]
-                          (updated, _) = update (NewChecks checks) initial
+                          checks = [ passing ]
+                          (updated, _) = update (NewChecks (Just checks)) initial
                         in
                           assertEqual updated.healthy (Just True))
                  , test "a null value sets an error"
@@ -75,11 +75,27 @@ updateTests =
                           assertEqual updated.error Nothing)
                  ] ++ unhealthyUpdateTests)
         , suite "LoadChecks"
-          [ test "new health checks are loaded"
-                 (let
-                   (_, fx) = update LoadChecks initial
-                 in
-                   assertEqual fx loadHealth) ] ]
+                [ test "new health checks are loaded"
+                       (let
+                         (_, fx) = update LoadChecks initial
+                       in
+                         assertEqual fx loadHealth) ]
+        , suite "Focus"
+                [ test "focus works on a known group"
+                       (let
+                         filled = { initial | checks <- [ passing ] }
+                         (updated, _) = update (Focus passing.serviceName) filled
+                       in
+                         assertEqual
+                           updated.focus
+                           (Just (passing.serviceName, Just [ passing ])))
+                , test "focus works on an unknown group"
+                       (let
+                         (updated, _) = update (Focus passing.serviceName) initial
+                       in
+                         assertEqual
+                           updated.focus
+                           (Just (passing.serviceName, Nothing))) ] ]
 
 addCheckTests : Test
 addCheckTests =
