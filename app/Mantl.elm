@@ -47,7 +47,7 @@ update action model =
   case action of
     Refresh ->
       ( model
-      , Effects.batch [ Effects.map VersionAction Version.getVersion
+      , Effects.batch [ Effects.map VersionAction Version.loadVersion
                       , Effects.map HealthAction Health.loadHealth ] )
 
     ServicesAction sub ->

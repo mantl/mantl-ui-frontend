@@ -17,7 +17,7 @@ init : (Model, Effects Action)
 init =
   ( { current = Nothing
     , hasUpdate = False }
-  , getVersion )
+  , loadVersion )
 
 -- UPDATE
 
@@ -47,8 +47,8 @@ update action model =
 
 -- ACTIONS
 
-getVersion : Effects Action
-getVersion =
+loadVersion : Effects Action
+loadVersion =
   Http.getString "signature"
       |> Task.toMaybe
       |> Task.map NewVersion
