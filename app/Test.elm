@@ -5,6 +5,7 @@ import Graphics.Element exposing (Element)
 import ElmTest.Test exposing (test, Test, suite)
 import ElmTest.Runner.Element exposing (runDisplay)
 
+import HealthTest
 import RouteTest
 import ServicesTest
 import VersionTest
@@ -12,7 +13,8 @@ import VersionTest
 tests : Test
 tests =
   suite "A Test Suite"
-        [ RouteTest.tests
+        [ HealthTest.tests
+        , RouteTest.tests
         , ServicesTest.tests
         , VersionTest.tests ]
 

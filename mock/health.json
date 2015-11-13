@@ -1,0 +1,572 @@
+[
+    {
+        "CheckID": "distributive-chronos-checks",
+        "Name": "Distributive Chronos Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:54:43Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/chronos.json\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Running checklist: chronos health check\" \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos package installed\" type=installed \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos configuration directory present\" type=directory \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos systemd service file present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos binary present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos zk_hosts configuration present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos master configuration present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos hostname configuration present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos http_port configuration present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos mesos_framework_name configuration present\" type=file \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos systemd service symlink present\" type=symlink \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos systemd service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"Check passed\" name=\"chronos webUI port\" type=TCP \ntime=\"2015-11-12T18:54:43Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"chronos health check\" report=\"\u21b4\\nTotal: 12\\nPassed: 12\\nFailed: 0\" \n",
+        "ServiceID": "chronos",
+        "ServiceName": "chronos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-consul-checks",
+        "Name": "Distributive Consul Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:51:06Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/consul.json\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Running checklist: consul health check\" \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"consul installation check\" type=installed \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"consul health check configuration file check\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"docker health check configuration check\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"ssl directory check\" type=directory \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"ACL existence check\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"wait for leader script check\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"rolling restart script check\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"Check passed\" name=\"service active binary existence check\" type=file \ntime=\"2015-11-12T18:51:06Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"consul health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "consul",
+        "ServiceName": "consul",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-dnsmasq-checks",
+        "Name": "Distributive dnsmasq Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:51:44Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/dnsmasq.json\" type=file \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Running checklist: dnsmasq health check\" \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"dnsmasq installation\" type=installed \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"bind-utils installation\" type=installed \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"NetworkManager installation\" type=installed \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"dnsmasq configuration directory\" type=directory \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"dnsmasq consul configuration file\" type=file \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"dnsmasq service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"NetworkManager configuration exists\" type=file \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"Check passed\" name=\"resolv.conf exists\" type=file \ntime=\"2015-11-12T18:51:44Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"dnsmasq health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-marathon-checks",
+        "Name": "Distributive marathon Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:50:00Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/marathon.json\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Running checklist: marathon health check\" \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon webUI port\" type=TCP \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon consul port\" type=TCP \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon installation\" type=installed \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon wait script\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon systemd unit file\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon configuration directory\" type=directory \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon zk configuration\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon http_port configuration\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon event_subscriber configuration\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon hostname configuration\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon collectd plugin\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon collectd configuration\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"marathon nginx configuration\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"nginx-marathon unit file\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"nginx-marathon env file\" type=file \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"Check passed\" name=\"nginx-marathon service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:50:00Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"marathon health check\" report=\"\u21b4\\nTotal: 16\\nPassed: 16\\nFailed: 0\" \n",
+        "ServiceID": "marathon",
+        "ServiceName": "marathon",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-nginx-checks",
+        "Name": "Distributive nginx Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:52Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/nginx.json\" type=file \ntime=\"2015-11-12T18:55:52Z\" level=info msg=\"Running checklist: nginx health check\" \ntime=\"2015-11-12T18:55:52Z\" level=info msg=\"Check passed\" name=\"nginx installation check\" type=installed \ntime=\"2015-11-12T18:55:52Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"nginx health check\" report=\"\u21b4\\nTotal: 1\\nPassed: 1\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-vault-checks",
+        "Name": "Distributive vault Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:53:24Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/vault.json\" type=file \ntime=\"2015-11-12T18:53:24Z\" level=info msg=\"Running checklist: vault health check\" \ntime=\"2015-11-12T18:53:24Z\" level=info msg=\"Check passed\" name=\"vault installation\" type=installed \ntime=\"2015-11-12T18:53:24Z\" level=info msg=\"Check passed\" name=\"vault systemd service file present\" type=file \ntime=\"2015-11-12T18:53:24Z\" level=info msg=\"Check passed\" name=\"vault systemd service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:53:24Z\" level=info msg=\"Check passed\" name=\"vault port open\" type=port \ntime=\"2015-11-12T18:53:24Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"vault health check\" report=\"\u21b4\\nTotal: 4\\nPassed: 4\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-zookeeper-checks",
+        "Name": "Distributive zookeeper Health Checks",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:51:46Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/zookeeper.json\" type=file \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Running checklist: zookeeper health check\" \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"netcat installation\" type=installed \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"wait-for-listen script existence\" type=file \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper log directory existence\" type=directory \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper misc. scripts\" type=file \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper consul service\" type=file \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper collectd plugin\" type=file \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper collectd plugin configuration\" type=file \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper client port\" type=TCP \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper follower port\" type=TCP \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper leader election port\" type=TCP \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper service active\" type=systemctlActive \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"Check passed\" name=\"zookeeper service loaded\" type=systemctlLoaded \ntime=\"2015-11-12T18:51:46Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"zookeeper health check\" report=\"\u21b4\\nTotal: 12\\nPassed: 12\\nFailed: 0\" \n",
+        "ServiceID": "2181:zkid-2",
+        "ServiceName": "zookeeper",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "serfHealth",
+        "Name": "Serf Health Status",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "Agent alive and reachable",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:2181:zkid-2",
+        "Name": "Service 'zookeeper' check",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "",
+        "ServiceID": "2181:zkid-2",
+        "ServiceName": "zookeeper",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:chronos",
+        "Name": "Service 'chronos' check",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "pong\nHTTP/1.1 200 OK\r\nCache-Control: must-revalidate,no-cache,no-store\r\nAccess-Control-Allow-Credentials: true\r\nContent-Type: text/plain;charset=ISO-8859-1\r\nContent-Length: 5\r\nServer: Jetty(8.y.z-SNAPSHOT)\r\n\r\n",
+        "ServiceID": "chronos",
+        "ServiceName": "chronos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:docker",
+        "Name": "Service 'docker' check",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "active\n",
+        "ServiceID": "docker",
+        "ServiceName": "docker",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:marathon",
+        "Name": "Service 'marathon' check",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "pong\nHTTP/1.1 200 OK\r\nServer: Jetty(8.y.z-SNAPSHOT)\r\nCache-Control: must-revalidate,no-cache,no-store\r\nAccess-Control-Allow-Credentials: true\r\nX-Marathon-Leader: http://bh-control-03.node.consul:18080\r\nExpires: 0\r\nPragma: no-cache\r\nContent-Length: 5\r\nContent-Type: text/plain;charset=ISO-8859-1\r\nX-Marathon-Via: 1.1 bh-control-01.node.consul:18080\r\n\r\n",
+        "ServiceID": "marathon",
+        "ServiceName": "marathon",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:mesos-consul:mesos:10.0.0.6:15050",
+        "Name": "Service 'mesos' check",
+        "Node": "bh-control-01",
+        "Notes": "",
+        "Output": "HTTP GET http://10.0.0.6:15050/master/health: 200 OK Output: ",
+        "ServiceID": "mesos-consul:mesos:10.0.0.6:15050",
+        "ServiceName": "mesos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-chronos-checks",
+        "Name": "Distributive Chronos Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:27Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/chronos.json\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Running checklist: chronos health check\" \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos package installed\" type=installed \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos configuration directory present\" type=directory \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos systemd service file present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos binary present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos zk_hosts configuration present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos master configuration present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos hostname configuration present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos http_port configuration present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos mesos_framework_name configuration present\" type=file \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos systemd service symlink present\" type=symlink \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos systemd service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"Check passed\" name=\"chronos webUI port\" type=TCP \ntime=\"2015-11-12T18:55:27Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"chronos health check\" report=\"\u21b4\\nTotal: 12\\nPassed: 12\\nFailed: 0\" \n",
+        "ServiceID": "chronos",
+        "ServiceName": "chronos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-consul-checks",
+        "Name": "Distributive Consul Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:54:46Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/consul.json\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Running checklist: consul health check\" \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"consul installation check\" type=installed \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"consul health check configuration file check\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"docker health check configuration check\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"ssl directory check\" type=directory \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"ACL existence check\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"wait for leader script check\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"rolling restart script check\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"Check passed\" name=\"service active binary existence check\" type=file \ntime=\"2015-11-12T18:54:46Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"consul health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "consul",
+        "ServiceName": "consul",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-dnsmasq-checks",
+        "Name": "Distributive dnsmasq Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:53:52Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/dnsmasq.json\" type=file \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Running checklist: dnsmasq health check\" \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"dnsmasq installation\" type=installed \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"bind-utils installation\" type=installed \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"NetworkManager installation\" type=installed \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"dnsmasq configuration directory\" type=directory \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"dnsmasq consul configuration file\" type=file \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"dnsmasq service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"NetworkManager configuration exists\" type=file \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"Check passed\" name=\"resolv.conf exists\" type=file \ntime=\"2015-11-12T18:53:52Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"dnsmasq health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-marathon-checks",
+        "Name": "Distributive marathon Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:53:18Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/marathon.json\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Running checklist: marathon health check\" \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon webUI port\" type=TCP \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon consul port\" type=TCP \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon installation\" type=installed \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon wait script\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon systemd unit file\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon configuration directory\" type=directory \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon zk configuration\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon http_port configuration\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon event_subscriber configuration\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon hostname configuration\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon collectd plugin\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon collectd configuration\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"marathon nginx configuration\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"nginx-marathon unit file\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"nginx-marathon env file\" type=file \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"Check passed\" name=\"nginx-marathon service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:53:18Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"marathon health check\" report=\"\u21b4\\nTotal: 16\\nPassed: 16\\nFailed: 0\" \n",
+        "ServiceID": "marathon",
+        "ServiceName": "marathon",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-nginx-checks",
+        "Name": "Distributive nginx Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:53:02Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/nginx.json\" type=file \ntime=\"2015-11-12T18:53:02Z\" level=info msg=\"Running checklist: nginx health check\" \ntime=\"2015-11-12T18:53:02Z\" level=info msg=\"Check passed\" name=\"nginx installation check\" type=installed \ntime=\"2015-11-12T18:53:02Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"nginx health check\" report=\"\u21b4\\nTotal: 1\\nPassed: 1\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-vault-checks",
+        "Name": "Distributive vault Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:25Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/vault.json\" type=file \ntime=\"2015-11-12T18:55:25Z\" level=info msg=\"Running checklist: vault health check\" \ntime=\"2015-11-12T18:55:25Z\" level=info msg=\"Check passed\" name=\"vault installation\" type=installed \ntime=\"2015-11-12T18:55:25Z\" level=info msg=\"Check passed\" name=\"vault systemd service file present\" type=file \ntime=\"2015-11-12T18:55:25Z\" level=info msg=\"Check passed\" name=\"vault systemd service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:55:25Z\" level=info msg=\"Check passed\" name=\"vault port open\" type=port \ntime=\"2015-11-12T18:55:25Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"vault health check\" report=\"\u21b4\\nTotal: 4\\nPassed: 4\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-zookeeper-checks",
+        "Name": "Distributive zookeeper Health Checks",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:19Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/zookeeper.json\" type=file \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Running checklist: zookeeper health check\" \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"netcat installation\" type=installed \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"wait-for-listen script existence\" type=file \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper log directory existence\" type=directory \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper misc. scripts\" type=file \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper consul service\" type=file \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper collectd plugin\" type=file \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper collectd plugin configuration\" type=file \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper client port\" type=TCP \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper follower port\" type=TCP \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper leader election port\" type=TCP \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper service active\" type=systemctlActive \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"Check passed\" name=\"zookeeper service loaded\" type=systemctlLoaded \ntime=\"2015-11-12T18:55:19Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"zookeeper health check\" report=\"\u21b4\\nTotal: 12\\nPassed: 12\\nFailed: 0\" \n",
+        "ServiceID": "2181:zkid-1",
+        "ServiceName": "zookeeper",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "serfHealth",
+        "Name": "Serf Health Status",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "Agent alive and reachable",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:2181:zkid-1",
+        "Name": "Service 'zookeeper' check",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "",
+        "ServiceID": "2181:zkid-1",
+        "ServiceName": "zookeeper",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:chronos",
+        "Name": "Service 'chronos' check",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "pong\nHTTP/1.1 200 OK\r\nServer: Jetty(8.y.z-SNAPSHOT)\r\nCache-Control: must-revalidate,no-cache,no-store\r\nAccess-Control-Allow-Credentials: true\r\nContent-Length: 5\r\nContent-Type: text/plain;charset=ISO-8859-1\r\n\r\n",
+        "ServiceID": "chronos",
+        "ServiceName": "chronos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:docker",
+        "Name": "Service 'docker' check",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "active\n",
+        "ServiceID": "docker",
+        "ServiceName": "docker",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:marathon",
+        "Name": "Service 'marathon' check",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "pong\nHTTP/1.1 200 OK\r\nServer: Jetty(8.y.z-SNAPSHOT)\r\nCache-Control: must-revalidate,no-cache,no-store\r\nAccess-Control-Allow-Credentials: true\r\nX-Marathon-Leader: http://bh-control-03.node.consul:18080\r\nExpires: 0\r\nPragma: no-cache\r\nContent-Length: 5\r\nContent-Type: text/plain;charset=ISO-8859-1\r\nX-Marathon-Via: 1.1 bh-control-02.node.consul:18080\r\n\r\n",
+        "ServiceID": "marathon",
+        "ServiceName": "marathon",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:mesos-consul:mesos:10.0.0.3:15050",
+        "Name": "Service 'mesos' check",
+        "Node": "bh-control-02",
+        "Notes": "",
+        "Output": "HTTP GET http://10.0.0.3:15050/master/health: 200 OK Output: ",
+        "ServiceID": "mesos-consul:mesos:10.0.0.3:15050",
+        "ServiceName": "mesos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-chronos-checks",
+        "Name": "Distributive Chronos Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:16Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/chronos.json\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Running checklist: chronos health check\" \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos package installed\" type=installed \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos configuration directory present\" type=directory \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos systemd service file present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos binary present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos zk_hosts configuration present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos master configuration present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos hostname configuration present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos http_port configuration present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos mesos_framework_name configuration present\" type=file \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos systemd service symlink present\" type=symlink \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos systemd service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"Check passed\" name=\"chronos webUI port\" type=TCP \ntime=\"2015-11-12T18:55:16Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"chronos health check\" report=\"\u21b4\\nTotal: 12\\nPassed: 12\\nFailed: 0\" \n",
+        "ServiceID": "chronos",
+        "ServiceName": "chronos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-consul-checks",
+        "Name": "Distributive Consul Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:46Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/consul.json\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Running checklist: consul health check\" \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"consul installation check\" type=installed \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"consul health check configuration file check\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"docker health check configuration check\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"ssl directory check\" type=directory \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"ACL existence check\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"wait for leader script check\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"rolling restart script check\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"service active binary existence check\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"consul health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "consul",
+        "ServiceName": "consul",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-dnsmasq-checks",
+        "Name": "Distributive dnsmasq Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:50:50Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/dnsmasq.json\" type=file \ntime=\"2015-11-12T18:50:50Z\" level=info msg=\"Running checklist: dnsmasq health check\" \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"dnsmasq installation\" type=installed \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"bind-utils installation\" type=installed \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"NetworkManager installation\" type=installed \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"dnsmasq configuration directory\" type=directory \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"dnsmasq consul configuration file\" type=file \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"dnsmasq service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"NetworkManager configuration exists\" type=file \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"Check passed\" name=\"resolv.conf exists\" type=file \ntime=\"2015-11-12T18:50:51Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"dnsmasq health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-marathon-checks",
+        "Name": "Distributive marathon Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:53:58Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/marathon.json\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Running checklist: marathon health check\" \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon webUI port\" type=TCP \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon consul port\" type=TCP \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon installation\" type=installed \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon wait script\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon systemd unit file\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon configuration directory\" type=directory \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon zk configuration\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon http_port configuration\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon event_subscriber configuration\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon hostname configuration\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon collectd plugin\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon collectd configuration\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"marathon nginx configuration\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"nginx-marathon unit file\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"nginx-marathon env file\" type=file \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"Check passed\" name=\"nginx-marathon service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:53:58Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"marathon health check\" report=\"\u21b4\\nTotal: 16\\nPassed: 16\\nFailed: 0\" \n",
+        "ServiceID": "marathon",
+        "ServiceName": "marathon",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-nginx-checks",
+        "Name": "Distributive nginx Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:44Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/nginx.json\" type=file \ntime=\"2015-11-12T18:55:44Z\" level=info msg=\"Running checklist: nginx health check\" \ntime=\"2015-11-12T18:55:44Z\" level=info msg=\"Check passed\" name=\"nginx installation check\" type=installed \ntime=\"2015-11-12T18:55:44Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"nginx health check\" report=\"\u21b4\\nTotal: 1\\nPassed: 1\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-vault-checks",
+        "Name": "Distributive vault Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:53:53Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/vault.json\" type=file \ntime=\"2015-11-12T18:53:53Z\" level=info msg=\"Running checklist: vault health check\" \ntime=\"2015-11-12T18:53:53Z\" level=info msg=\"Check passed\" name=\"vault installation\" type=installed \ntime=\"2015-11-12T18:53:53Z\" level=info msg=\"Check passed\" name=\"vault systemd service file present\" type=file \ntime=\"2015-11-12T18:53:53Z\" level=info msg=\"Check passed\" name=\"vault systemd service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:53:54Z\" level=info msg=\"Check passed\" name=\"vault port open\" type=port \ntime=\"2015-11-12T18:53:54Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"vault health check\" report=\"\u21b4\\nTotal: 4\\nPassed: 4\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-zookeeper-checks",
+        "Name": "Distributive zookeeper Health Checks",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:50:18Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/zookeeper.json\" type=file \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Running checklist: zookeeper health check\" \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"netcat installation\" type=installed \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"wait-for-listen script existence\" type=file \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper log directory existence\" type=directory \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper misc. scripts\" type=file \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper consul service\" type=file \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper collectd plugin\" type=file \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper collectd plugin configuration\" type=file \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper client port\" type=TCP \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper follower port\" type=TCP \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper leader election port\" type=TCP \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper service active\" type=systemctlActive \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"Check passed\" name=\"zookeeper service loaded\" type=systemctlLoaded \ntime=\"2015-11-12T18:50:18Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"zookeeper health check\" report=\"\u21b4\\nTotal: 12\\nPassed: 12\\nFailed: 0\" \n",
+        "ServiceID": "2181:zkid-3",
+        "ServiceName": "zookeeper",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "serfHealth",
+        "Name": "Serf Health Status",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "Agent alive and reachable",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:2181:zkid-3",
+        "Name": "Service 'zookeeper' check",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "",
+        "ServiceID": "2181:zkid-3",
+        "ServiceName": "zookeeper",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:chronos",
+        "Name": "Service 'chronos' check",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "pong\nHTTP/1.1 200 OK\r\nServer: Jetty(8.y.z-SNAPSHOT)\r\nCache-Control: must-revalidate,no-cache,no-store\r\nAccess-Control-Allow-Credentials: true\r\nContent-Length: 5\r\nContent-Type: text/plain;charset=ISO-8859-1\r\n\r\n",
+        "ServiceID": "chronos",
+        "ServiceName": "chronos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:docker",
+        "Name": "Service 'docker' check",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "active\n",
+        "ServiceID": "docker",
+        "ServiceName": "docker",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:marathon",
+        "Name": "Service 'marathon' check",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "pong\nHTTP/1.1 200 OK\r\nX-Marathon-Leader: http://bh-control-03.node.consul:18080\r\nPragma: no-cache\r\nExpires: 0\r\nCache-Control: must-revalidate,no-cache,no-store\r\nAccess-Control-Allow-Credentials: true\r\nContent-Type: text/plain;charset=ISO-8859-1\r\nContent-Length: 5\r\nServer: Jetty(8.y.z-SNAPSHOT)\r\n\r\n",
+        "ServiceID": "marathon",
+        "ServiceName": "marathon",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:mesos-consul:mesos:10.0.0.2:15050",
+        "Name": "Service 'mesos' check",
+        "Node": "bh-control-03",
+        "Notes": "",
+        "Output": "HTTP GET http://10.0.0.2:15050/master/health: 200 OK Output: ",
+        "ServiceID": "mesos-consul:mesos:10.0.0.2:15050",
+        "ServiceName": "mesos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-dnsmasq-checks",
+        "Name": "Distributive dnsmasq Health Checks",
+        "Node": "bh-worker-001",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:54:27Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/dnsmasq.json\" type=file \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Running checklist: dnsmasq health check\" \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"dnsmasq installation\" type=installed \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"bind-utils installation\" type=installed \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"NetworkManager installation\" type=installed \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"dnsmasq configuration directory\" type=directory \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"dnsmasq consul configuration file\" type=file \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"dnsmasq service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"NetworkManager configuration exists\" type=file \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"Check passed\" name=\"resolv.conf exists\" type=file \ntime=\"2015-11-12T18:54:27Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"dnsmasq health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-haproxy-checks",
+        "Name": "Distributive haproxy Health Checks",
+        "Node": "bh-worker-001",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:26Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/haproxy.json\" type=file \ntime=\"2015-11-12T18:55:26Z\" level=info msg=\"Running checklist: haproxy health check\" \ntime=\"2015-11-12T18:55:26Z\" level=info msg=\"Check passed\" name=\"haproxy environment file\" type=file \ntime=\"2015-11-12T18:55:26Z\" level=info msg=\"Check passed\" name=\"haproxy configuration file\" type=file \ntime=\"2015-11-12T18:55:26Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"haproxy health check\" report=\"\u21b4\\nTotal: 2\\nPassed: 2\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-nginx-checks",
+        "Name": "Distributive nginx Health Checks",
+        "Node": "bh-worker-001",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:50:50Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/nginx.json\" type=file \ntime=\"2015-11-12T18:50:50Z\" level=info msg=\"Running checklist: nginx health check\" \ntime=\"2015-11-12T18:50:50Z\" level=info msg=\"Check passed\" name=\"nginx installation check\" type=installed \ntime=\"2015-11-12T18:50:50Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"nginx health check\" report=\"\u21b4\\nTotal: 1\\nPassed: 1\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "serfHealth",
+        "Name": "Serf Health Status",
+        "Node": "bh-worker-001",
+        "Notes": "",
+        "Output": "Agent alive and reachable",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:docker",
+        "Name": "Service 'docker' check",
+        "Node": "bh-worker-001",
+        "Notes": "",
+        "Output": "active\n",
+        "ServiceID": "docker",
+        "ServiceName": "docker",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:mesos-consul:mesos:20151112-182214-50331658-15050-19550-S0:bh-worker-001",
+        "Name": "Service 'mesos' check",
+        "Node": "bh-worker-001",
+        "Notes": "",
+        "Output": "HTTP GET http://10.0.0.7:5051/slave(1)/health: 200 OK Output: ",
+        "ServiceID": "mesos-consul:mesos:20151112-182214-50331658-15050-19550-S0:bh-worker-001",
+        "ServiceName": "mesos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-dnsmasq-checks",
+        "Name": "Distributive dnsmasq Health Checks",
+        "Node": "bh-worker-002",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:12Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/dnsmasq.json\" type=file \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Running checklist: dnsmasq health check\" \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"dnsmasq installation\" type=installed \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"bind-utils installation\" type=installed \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"NetworkManager installation\" type=installed \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"dnsmasq configuration directory\" type=directory \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"dnsmasq consul configuration file\" type=file \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"dnsmasq service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"NetworkManager configuration exists\" type=file \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"Check passed\" name=\"resolv.conf exists\" type=file \ntime=\"2015-11-12T18:55:12Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"dnsmasq health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-haproxy-checks",
+        "Name": "Distributive haproxy Health Checks",
+        "Node": "bh-worker-002",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:51:20Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/haproxy.json\" type=file \ntime=\"2015-11-12T18:51:20Z\" level=info msg=\"Running checklist: haproxy health check\" \ntime=\"2015-11-12T18:51:20Z\" level=info msg=\"Check passed\" name=\"haproxy environment file\" type=file \ntime=\"2015-11-12T18:51:20Z\" level=info msg=\"Check passed\" name=\"haproxy configuration file\" type=file \ntime=\"2015-11-12T18:51:20Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"haproxy health check\" report=\"\u21b4\\nTotal: 2\\nPassed: 2\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-nginx-checks",
+        "Name": "Distributive nginx Health Checks",
+        "Node": "bh-worker-002",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:49:46Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/nginx.json\" type=file \ntime=\"2015-11-12T18:49:46Z\" level=info msg=\"Running checklist: nginx health check\" \ntime=\"2015-11-12T18:49:46Z\" level=info msg=\"Check passed\" name=\"nginx installation check\" type=installed \ntime=\"2015-11-12T18:49:46Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"nginx health check\" report=\"\u21b4\\nTotal: 1\\nPassed: 1\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "serfHealth",
+        "Name": "Serf Health Status",
+        "Node": "bh-worker-002",
+        "Notes": "",
+        "Output": "Agent alive and reachable",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:docker",
+        "Name": "Service 'docker' check",
+        "Node": "bh-worker-002",
+        "Notes": "",
+        "Output": "active\n",
+        "ServiceID": "docker",
+        "ServiceName": "docker",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:mesos-consul:mesos:20151112-182214-50331658-15050-19550-S1:bh-worker-002",
+        "Name": "Service 'mesos' check",
+        "Node": "bh-worker-002",
+        "Notes": "",
+        "Output": "HTTP GET http://10.0.0.4:5051/slave(1)/health: 200 OK Output: ",
+        "ServiceID": "mesos-consul:mesos:20151112-182214-50331658-15050-19550-S1:bh-worker-002",
+        "ServiceName": "mesos",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-dnsmasq-checks",
+        "Name": "Distributive dnsmasq Health Checks",
+        "Node": "bh-worker-003",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:24Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/dnsmasq.json\" type=file \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Running checklist: dnsmasq health check\" \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"dnsmasq installation\" type=installed \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"bind-utils installation\" type=installed \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"NetworkManager installation\" type=installed \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"dnsmasq configuration directory\" type=directory \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"dnsmasq consul configuration file\" type=file \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"dnsmasq service enabled\" type=systemctlLoaded \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"NetworkManager configuration exists\" type=file \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"Check passed\" name=\"resolv.conf exists\" type=file \ntime=\"2015-11-12T18:55:24Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"dnsmasq health check\" report=\"\u21b4\\nTotal: 8\\nPassed: 8\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-haproxy-checks",
+        "Name": "Distributive haproxy Health Checks",
+        "Node": "bh-worker-003",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:48:41Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/haproxy.json\" type=file \ntime=\"2015-11-12T18:48:41Z\" level=info msg=\"Running checklist: haproxy health check\" \ntime=\"2015-11-12T18:48:41Z\" level=info msg=\"Check passed\" name=\"haproxy environment file\" type=file \ntime=\"2015-11-12T18:48:41Z\" level=info msg=\"Check passed\" name=\"haproxy configuration file\" type=file \ntime=\"2015-11-12T18:48:41Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"haproxy health check\" report=\"\u21b4\\nTotal: 2\\nPassed: 2\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "distributive-nginx-checks",
+        "Name": "Distributive nginx Health Checks",
+        "Node": "bh-worker-003",
+        "Notes": "",
+        "Output": "time=\"2015-11-12T18:55:46Z\" level=info msg=\"Creating checklist(s)...\" path=\"/etc/distributive.d/nginx.json\" type=file \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Running checklist: nginx health check\" \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"Check passed\" name=\"nginx installation check\" type=installed \ntime=\"2015-11-12T18:55:46Z\" level=info msg=\"All checks passed, printing checklist report\" checklist=\"nginx health check\" report=\"\u21b4\\nTotal: 1\\nPassed: 1\\nFailed: 0\" \n",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "serfHealth",
+        "Name": "Serf Health Status",
+        "Node": "bh-worker-003",
+        "Notes": "",
+        "Output": "Agent alive and reachable",
+        "ServiceID": "",
+        "ServiceName": "",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:docker",
+        "Name": "Service 'docker' check",
+        "Node": "bh-worker-003",
+        "Notes": "",
+        "Output": "active\n",
+        "ServiceID": "docker",
+        "ServiceName": "docker",
+        "Status": "passing"
+    },
+    {
+        "CheckID": "service:mesos-consul:mesos:20151112-182214-50331658-15050-19550-S2:bh-worker-003",
+        "Name": "Service 'mesos' check",
+        "Node": "bh-worker-003",
+        "Notes": "",
+        "Output": "HTTP GET http://10.0.0.5:5051/slave(1)/health: 200 OK Output: ",
+        "ServiceID": "mesos-consul:mesos:20151112-182214-50331658-15050-19550-S2:bh-worker-003",
+        "ServiceName": "mesos",
+        "Status": "passing"
+    }
+]

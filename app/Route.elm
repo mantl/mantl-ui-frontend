@@ -2,13 +2,16 @@ module Route where
 
 import Attributes exposing (classes)
 import Effects exposing (Effects)
+import Health
 import Html exposing (..)
 import Html.Attributes exposing (class, classList, href)
 import String exposing (split)
 
 -- MODEL
 
-type Location = Home
+type Location
+  = Home
+  | HealthOverview
 
 type alias Model = Maybe Location
 
@@ -32,7 +35,8 @@ urlFor loc =
   let
     url =
       case loc of
-        Home -> "/"
+        Home           -> "/"
+        HealthOverview -> "/health/"
   in
     "#" ++ url
 
@@ -45,8 +49,9 @@ locFor path =
         |> List.filter (\seg -> seg /= "" && seg /= "#")
   in
     case segments of
-      [] -> Just Home
-      _  -> Nothing
+      []         -> Just Home
+      ["health"] -> Just HealthOverview
+      _          -> Nothing
 
 -- VIEW
 
@@ -64,8 +69,8 @@ navItem model page caption =
          , href (urlFor page) ]
          [ text caption ] ]
 
-view : Signal.Address Action -> Model -> Html
-view address model =
+view : Signal.Address Action -> Model -> Health.Model -> Html
+view address model health =
   let
     link = navItem model
   in
@@ -75,4 +80,10 @@ view address model =
                   , href (urlFor Home) ]
                   [ text "Mantl" ]
               , ul [ classes [ "nav", "navbar-nav" ] ]
-                   [ link Home "Home" ] ] ]
+                   [ link Home "Home"
+                   , link HealthOverview "Health" ]
+              , div [ classes [ "nav", "navbar-nav", "pull-right" ] ]
+                    [ a [ classes [ "nav-item", "nav-link", "health", Health.statusToClass health.status ]
+                        , href (urlFor HealthOverview) ]
+                        [ Health.healthDot health.status "small"
+                        , health.status |> Health.statusToString |> text ] ] ] ]

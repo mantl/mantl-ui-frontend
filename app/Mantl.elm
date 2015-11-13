@@ -4,6 +4,8 @@ import Attributes exposing (classes)
 import Effects exposing (Effects)
 import Html exposing (..)
 import Html.Attributes exposing (class)
+
+import Health
 import Route
 import Services
 import Version
@@ -12,7 +14,8 @@ import Version
 
 type alias Model = { route : Route.Model
                    , services : Services.Model
-                   , version : Version.Model }
+                   , version : Version.Model
+                   , health : Health.Model }
 
 init : ( Model, Effects Action )
 init =
@@ -20,12 +23,15 @@ init =
     route = Route.init
     (services, sfx) = Services.init
     (version, vfx) = Version.init
+    (health, hfx) = Health.init
   in
     ( { route = route
       , services = services
-      , version = version }
+      , version = version
+      , health = health }
     , Effects.batch [ Effects.map ServicesAction sfx
-                    , Effects.map VersionAction vfx ] )
+                    , Effects.map VersionAction vfx
+                    , Effects.map HealthAction hfx ] )
 
 -- UPDATE
 
@@ -34,13 +40,15 @@ type Action
   | RouteAction Route.Action
   | ServicesAction Services.Action
   | VersionAction Version.Action
+  | HealthAction Health.Action
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
   case action of
     Refresh ->
       ( model
-      , Effects.map VersionAction Version.getVersion )
+      , Effects.batch [ Effects.map VersionAction Version.loadVersion
+                      , Effects.map HealthAction Health.loadHealth ] )
 
     ServicesAction sub ->
       let
@@ -63,6 +71,13 @@ update action model =
         ( { model | version <- version }
         , Effects.map VersionAction fx )
 
+    HealthAction sub ->
+      let
+        (health, fx) = Health.update sub model.health
+      in
+        ( { model | health <- health }
+        , Effects.map HealthAction fx )
+
 -- VIEW
 
 view : Signal.Address Action -> Model -> Html
@@ -71,12 +86,16 @@ view address model =
     body =
       case model.route of
         Just (Route.Home) ->
-          Services.view (Signal.forwardTo address ServicesAction) model.services
+          Services.view (Signal.forwardTo address ServicesAction) model.services model.health
+
+        Just (Route.HealthOverview) ->
+          Health.view (Signal.forwardTo address HealthAction) model.health
+
         Nothing -> Route.notfound
   in
     div [ class "app" ]
         [ Version.notification (Signal.forwardTo address VersionAction) model.version
-        , Route.view (Signal.forwardTo address RouteAction) model.route
+        , Route.view (Signal.forwardTo address RouteAction) model.route model.health
         , div [ classes [ "container", "content" ] ]
               [ body
               , Version.view (Signal.forwardTo address VersionAction) model.version ] ]

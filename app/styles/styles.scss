@@ -1,10 +1,17 @@
 @import 'mixins.scss';
+@import 'vendor/bootstrap/mixins/buttons.scss';
+@import 'vendor/bootstrap/mixins/grid.scss';
+@import 'vendor/bootstrap/mixins/hover.scss';
 @import 'vendor/bootstrap/variables.scss';
 
 /* general */
 body {
-    background: url(../images/bg.jpg) no-repeat;
-    @include image-2x("../images/bg@2x.jpg", 100%, 840px);
+    background-image: url(../images/bg.jpg);
+    @include image-2x-plain("../images/bg@2x.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+    background-attachment: fixed;
 }
 .controls {
     text-align: right;
@@ -17,6 +24,9 @@ body {
     min-height: 100%;
     border-radius: 0 0 1rem 1rem;
 }
+.hidden {
+    display: none;
+}
 
 /* header */
 .navbar {
@@ -26,10 +36,29 @@ body {
     .nav-item.active a {
         color: $gray-lightest;
     }
+    .nav-item a {
+        color: $gray-lightest * 0.8;
+    }
 
-    p.nav-item {
+    p.nav-item, {
         padding: $nav-link-padding;
         margin: 0
+    }
+
+    .health {
+        color: $gray;
+
+        &.passing {
+            color: $brand-success;
+        }
+
+        &.warning {
+            color: $brand-warning;
+        }
+
+        &.critical {
+            color: $brand-danger;
+        }
     }
 
     &.navbar-attention {
@@ -38,12 +67,12 @@ body {
         color: $gray-lightest;
     }
 }
+.card {
+    background-color: $gray-lightest;
+}
 
 /* services */
 .service {
-    .card {
-        background-color: $gray-lightest;
-    }
 
     h4 {
         text-transform: capitalize;
@@ -103,4 +132,105 @@ body {
     background-color: $gray-lightest;
     padding: 2px;
     border-radius: 5px 0 0 0;
+}
+
+/* health checks */
+.healthdot {
+    // hide inner text
+    display: inline-block;
+    overflow: hidden;
+    text-indent: 100%;
+
+    // make a dot
+    &.small {
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+
+        margin: 1px 5px 1px 1px;
+    }
+
+    &.large {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+
+        margin: 2px 2px 10px 2px;
+    }
+
+    // colors
+    box-shadow: 0 0 2px $gray;
+    background-color: $gray;
+
+    &.passing {
+        box-shadow: 0 0 2px $brand-success;
+        background-color: $brand-success;
+    }
+
+    &.warning {
+        box-shadow: 0 0 2px $brand-warning;
+        background-color: $brand-warning;
+    }
+
+    &.critical {
+        box-shadow: 0 0 2px $brand-danger;
+        background-color: $brand-danger;
+    }
+}
+
+.healthchecks {
+    .service, .check {
+        border-color: $gray;
+        border-left-width: .5rem;
+
+        &.passing { border-color: $brand-success; }
+        &.warning { border-color: $brand-warning; }
+        &.critical { border-color: $brand-danger; }
+    }
+
+    .service {
+        cursor: pointer;
+
+        &.active {
+            border-color: $gray * 1.2;
+
+            &.passing { border-color: $brand-success * 1.2; }
+            &.warning { border-color: $brand-warning * 1.2; }
+            &.critical { border-color: $brand-danger * 1.2; }
+        }
+    }
+
+    .check {
+        .attributes {
+            @include make-row();
+            margin-bottom: 0;
+
+            .attribute {
+                @include make-col();
+                @include make-col-span(2, 10);
+                text-align: center;
+            }
+        }
+
+        .output {
+            background-color: $gray;
+            color: $gray-lightest;
+            border-radius: 5px;
+            padding: 15px;
+        }
+    }
+}
+
+.btn-health {
+    &.passing {
+        @include button-outline-variant($brand-success);
+    }
+
+    &.warning {
+        @include button-outline-variant($brand-warning);
+    }
+
+    &.critical {
+        @include button-outline-variant($brand-danger);
+    }
 }

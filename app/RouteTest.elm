@@ -7,7 +7,8 @@ import ElmTest.Test exposing (test, Test, suite)
 import Route exposing (..)
 
 routes : List (Location, String)
-routes = [ (Home, "#/") ]
+routes = [ (Home, "#/")
+         , (HealthOverview, "#/health/")]
 
 -- urlFor
 urlForTest : (Location, String) -> Test
