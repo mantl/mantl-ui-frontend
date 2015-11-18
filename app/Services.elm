@@ -7,7 +7,7 @@ import Html exposing (..)
 import Html.Attributes exposing (href, class)
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode exposing ((:=), Decoder, object2, string, list)
+import Json.Decode exposing ((:=), Decoder, object4, string, list)
 import Route
 import Signal
 import Task
@@ -15,6 +15,8 @@ import Task
 -- MODEL
 
 type alias Service = { name : String
+                     , id : String
+                     , check : String
                      , path : String }
 
 type alias Services = List Service
@@ -52,8 +54,10 @@ loadServices =
       |> Effects.task
 
 serviceDecoder : Decoder Service
-serviceDecoder = object2 Service
+serviceDecoder = object4 Service
                          ("name" := string)
+                         ("id" := string)
+                         ("check" := string)
                          ("path" := string)
 
 -- VIEW
@@ -62,13 +66,13 @@ serviceView : Signal.Address Action -> Health.Status -> Service -> Html
 serviceView address health service =
   div [ classes [ "col-sm-3", "service" ] ]
       [ div [ classes [ "card", "card-block" ] ]
-            [ div [ class "logo" ] [ div [ class service.name ] [ ] ]
+            [ div [ class "logo" ] [ div [ class service.id ] [ ] ]
             , h4 [ class "card-title"] [ text service.name ]
             , a [ classes [ "btn", "btn-block", "btn-primary" ]
                 , href service.path ]
                 [ text "Web UI" ]
             , a [ classes [ "btn", "btn-block", "btn-health", Health.statusToClass health ]
-                , href (Route.urlFor (Route.HealthCheck service.name))]
+                , href (Route.urlFor (Route.HealthCheck service.check))]
                 [ text ("Checks: " ++ (Health.statusToString health))]] ]
 
 view : Signal.Address Action -> Model -> Health.Model -> Html
@@ -89,7 +93,7 @@ view address model health =
               , div [ classes [ "row", "services" ] ]
                     (services |> List.map (\s -> serviceView
                                                    address
-                                                   (Health.statusForService s.name health)
+                                                   (Health.statusForService s.check health)
                                                    s)) ]
   in
     div [ class "row" ]

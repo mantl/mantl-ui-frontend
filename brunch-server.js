@@ -15,10 +15,11 @@ module.exports = function startServer(port, path, callback) {
         health: JSON.parse(fs.readFileSync("mock/health.json")),
         packages: JSON.parse(fs.readFileSync("mock/packages.json")),
         services: [
-            {name: "mesos", path: "/mesos"},
-            {name: "marathon", path: "/marathon"},
-            {name: "consul", path: "/consul"},
-            {name: "chronos", path: "/chronos"}
+            {name: "Mesos", id: "mesos", check: "mesos", path: "/mesos"},
+            {name: "Marathon", id: "marathon", check: "marathon", path: "/marathon"},
+            {name: "Consul", id: "consul", check: "consul", path: "/consul"},
+            {name: "Chronos", id: "chronos", check: "chronos", path: "/chronos"},
+            {name: "Traefik", id: "traefik", check: "traefik-admin", path: "/traefik"}
         ]
     };
 
