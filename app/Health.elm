@@ -168,7 +168,9 @@ view address model focus =
           focusContent =
             case (focus, focusedGroup) of
               (Nothing, _) -> div [ ] [ ]
-              (_, Nothing) -> div [ ] [ ]
+              (Just name, Nothing) ->
+                div [ ]
+                    [ h1 [ ] [ text ("No health checks found for " ++ name) ] ]
               (Just name, Just checks) ->
                 div [ ]
                     [ h1 [ ]
