@@ -11,6 +11,11 @@ routes = [ (Home, "#/")
          , (HealthOverview, "#/health/")
          , (HealthCheck "app", "#/health/app/") ]
 
+parents : List (Location, Location)
+parents = [ (Home, Home)
+          , (HealthOverview, HealthOverview)
+          , (HealthCheck "app", HealthOverview) ]
+
 -- urlFor
 urlForTest : (Location, String) -> Test
 urlForTest (loc, path) =
@@ -33,6 +38,16 @@ locForTests =
          , test "with hash" (assertEqual (locFor "#/") (Just Home)) ]
         ++ (List.map locForTest routes))
 
+-- parent
+parentForTest : (Location, Location) -> Test
+parentForTest (child, parent) =
+  test (toString child) (assertEqual (parentFor child) parent)
+
+parentForTests : Test
+parentForTests =
+  suite "parentFor"
+        (List.map parentForTest parents)
+
 -- update
 updateTests : Test
 updateTests =
@@ -45,4 +60,4 @@ updateTests =
 -- tests
 tests : Test
 tests =
-  suite "routes" [ urlForTests, locForTests, updateTests ]
+  suite "routes" [ urlForTests, locForTests, updateTests, parentForTests ]

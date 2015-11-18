@@ -56,6 +56,12 @@ locFor path =
       ["health", app] -> Just (HealthCheck app)
       _               -> Nothing
 
+parentFor : Location -> Location
+parentFor child =
+  case child of
+    HealthCheck _ -> HealthOverview
+    _             -> child
+
 -- VIEW
 
 notfound : Html
@@ -66,8 +72,14 @@ notfound =
 
 navItem : Model -> Location -> String -> Html
 navItem model page caption =
-  li [ classList [ ("nav-item", True)
-                 , ("active", model == (Just page)) ] ]
-     [ a [ class "nav-link"
-         , href (urlFor page) ]
-         [ text caption ] ]
+  let
+    active =
+      case model of
+        Nothing      -> False
+        Just current -> (parentFor current) == page
+  in
+    li [ classList [ ("nav-item", True)
+                   , ("active", active) ] ]
+       [ a [ class "nav-link"
+           , href (urlFor page) ]
+           [ text caption ] ]
