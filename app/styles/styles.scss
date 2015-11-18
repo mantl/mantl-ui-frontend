@@ -73,9 +73,7 @@ body {
 
 /* services */
 .service {
-
     h4 {
-        text-transform: capitalize;
         text-align: center;
     }
 }
@@ -121,6 +119,7 @@ body {
     @include logo(consul, 178px, 180px);
     @include logo(marathon, 180px, 180px);
     @include logo(chronos, 180px, 180px);
+    @include logo(traefik, 180px, 180px);
 }
 
 /* version */
