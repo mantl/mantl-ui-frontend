@@ -63,10 +63,16 @@ update action model =
       ( { model | error <- Just "Could not retrieve health checks" }, Effects.none )
 
     NewChecks (Just checks) ->
-      ( { model | checks <- checks
-                , status <- worstStatus checks
-                , error <- Nothing }
-      , Effects.none)
+      let
+        updated = { model | checks <- checks
+                          , status <- worstStatus checks
+                          , error <- Nothing }
+        (focused, fx) =
+          case updated.focus of
+            Nothing        -> (updated, Effects.none)
+            Just (name, _) -> update (Focus name) updated
+      in
+        ( focused, fx )
 
     LoadChecks ->
       ( model, loadHealth )

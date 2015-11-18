@@ -76,6 +76,14 @@ updateTests =
                           (updated, _) = update (NewChecks (Just [ passing ])) errored
                         in
                           assertEqual updated.error Nothing)
+                 , test "should update focused apps, too"
+                        (let
+                          (focused, _) = { initial | checks <- [ unknown ] } |> update (Focus unknown.serviceName)
+                          (updated, _) = update (NewChecks (Just [ warning ])) focused
+                        in
+                          assertEqual
+                            updated.focus
+                            (Just (warning.serviceName, Just [ warning ])))
                  ] ++ unhealthyUpdateTests)
         , suite "LoadChecks"
                 [ test "new health checks are loaded"
