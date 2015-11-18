@@ -8,7 +8,8 @@ import Route exposing (..)
 
 routes : List (Location, String)
 routes = [ (Home, "#/")
-         , (HealthOverview, "#/health/")]
+         , (HealthOverview, "#/health/")
+         , (HealthCheck "app", "#/health/app/") ]
 
 -- urlFor
 urlForTest : (Location, String) -> Test

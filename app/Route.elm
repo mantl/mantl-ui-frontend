@@ -2,7 +2,7 @@ module Route where
 
 import Attributes exposing (classes)
 import Effects exposing (Effects)
-import Health
+-- import Health
 import Html exposing (..)
 import Html.Attributes exposing (class, classList, href)
 import String exposing (split)
@@ -12,6 +12,7 @@ import String exposing (split)
 type Location
   = Home
   | HealthOverview
+  | HealthCheck String
 
 type alias Model = Maybe Location
 
@@ -35,8 +36,9 @@ urlFor loc =
   let
     url =
       case loc of
-        Home           -> "/"
-        HealthOverview -> "/health/"
+        Home            -> "/"
+        HealthOverview  -> "/health/"
+        HealthCheck app -> "/health/" ++ app ++ "/"
   in
     "#" ++ url
 
@@ -49,9 +51,10 @@ locFor path =
         |> List.filter (\seg -> seg /= "" && seg /= "#")
   in
     case segments of
-      []         -> Just Home
-      ["health"] -> Just HealthOverview
-      _          -> Nothing
+      []              -> Just Home
+      ["health"]      -> Just HealthOverview
+      ["health", app] -> Just (HealthCheck app)
+      _               -> Nothing
 
 -- VIEW
 
@@ -68,22 +71,3 @@ navItem model page caption =
      [ a [ class "nav-link"
          , href (urlFor page) ]
          [ text caption ] ]
-
-view : Signal.Address Action -> Model -> Health.Model -> Html
-view address model health =
-  let
-    link = navItem model
-  in
-    div [ classes [ "navbar", "navbar-inverted" ] ]
-        [ div [ class "container" ]
-              [ a [ class "navbar-brand"
-                  , href (urlFor Home) ]
-                  [ text "Mantl" ]
-              , ul [ classes [ "nav", "navbar-nav" ] ]
-                   [ link Home "Home"
-                   , link HealthOverview "Health" ]
-              , div [ classes [ "nav", "navbar-nav", "pull-right" ] ]
-                    [ a [ classes [ "nav-item", "nav-link", "health", Health.statusToClass health.status ]
-                        , href (urlFor HealthOverview) ]
-                        [ Health.healthDot health.status "small"
-                        , health.status |> Health.statusToString |> text ] ] ] ]

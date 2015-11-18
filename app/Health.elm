@@ -5,13 +5,14 @@ import Debug
 import Dict exposing (Dict)
 import Effects exposing (Effects)
 import Html exposing (..)
-import Html.Attributes exposing (class, classList)
+import Html.Attributes exposing (class, classList, href)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing (Decoder, list, object8, string, (:=), customDecoder)
 import List exposing ((::))
 import Maybe
 import Result
+import Route
 import Task
 
 -- MODEL
@@ -34,19 +35,15 @@ type Status
 
 type alias Checks = List Check
 
-type alias Focus = (String, Maybe Checks)
-
 type alias Model = { status : Status
                    , checks : Checks
-                   , error : Maybe String
-                   , focus : Maybe Focus }
+                   , error : Maybe String }
 
 init : ( Model, Effects Action )
 init =
   ( { status = Unknown
     , checks = [ ]
-    , error = Nothing
-    , focus = Nothing }
+    , error = Nothing }
   , loadHealth )
 
 -- UPDATE
@@ -54,7 +51,6 @@ init =
 type Action
   = NewChecks (Maybe Checks)
   | LoadChecks
-  | Focus String
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
@@ -63,26 +59,13 @@ update action model =
       ( { model | error <- Just "Could not retrieve health checks" }, Effects.none )
 
     NewChecks (Just checks) ->
-      let
-        updated = { model | checks <- checks
-                          , status <- worstStatus checks
-                          , error <- Nothing }
-        (focused, fx) =
-          case updated.focus of
-            Nothing        -> (updated, Effects.none)
-            Just (name, _) -> update (Focus name) updated
-      in
-        ( focused, fx )
+      ( { model | checks <- checks
+                , status <- worstStatus checks
+                , error <- Nothing }
+      , Effects.none )
 
     LoadChecks ->
       ( model, loadHealth )
-
-    Focus name ->
-      let
-        groups = displayGrouping model.checks
-        pair = Just (name, Dict.get name groups)
-      in
-        ( { model | focus <- pair }, Effects.none )
 
 -- ACTIONS
 
@@ -146,12 +129,12 @@ attributes attrs =
 
 checkSelector : Signal.Address Action -> String -> Checks -> Bool -> Html
 checkSelector address name checks active =
-  p [ classList [ ("service", True)
+  a [ classList [ ("service", True)
                 , ("card", True)
                 , ("card-block", True)
                 , (worstStatus checks |> statusToClass, True)
                 , ("active", active) ]
-    , onClick address (Focus name) ]
+    , href (Route.urlFor (Route.HealthCheck name)) ]
     [ text name ]
 
 checkDetail : Signal.Address Action -> Check -> Html
@@ -169,8 +152,8 @@ checkDetail address check =
       , p [ ] [ strong [ ] [ text "Output:" ] ]
       , pre [ class "output" ] [ code [ ] [ text check.output ] ] ]
 
-view : Signal.Address Action -> Model -> Html
-view address model =
+view : Signal.Address Action -> Model -> Maybe String -> Html
+view address model focus =
   let
     content =
       if List.isEmpty model.checks
@@ -178,17 +161,21 @@ view address model =
       else
         let
           groups = model.checks |> displayGrouping
+          focusedGroup =
+            case focus of
+              Nothing   -> Nothing
+              Just name -> Dict.get name groups
           focusContent =
-            case model.focus of
-              Nothing                   -> div [ ] [ ]
-              Just (name, Nothing)      -> div [ ] [ ]
-              Just (name, Just checks)  ->
+            case (focus, focusedGroup) of
+              (Nothing, _) -> div [ ] [ ]
+              (_, Nothing) -> div [ ] [ ]
+              (Just name, Just checks) ->
                 div [ ]
                     [ h1 [ ]
                          [ healthDot (worstStatus checks) "large"
                          , text name ]
                     , div [ class "checks" ]
-                          (List.map (checkDetail address) checks) ]
+                          (List.map (checkDetail address) checks)]
         in
           div [ class "col-sm-12" ]
               [ div [ classes [ "row", "controls" ] ]
@@ -203,7 +190,7 @@ view address model =
                              |> List.map (\ (name, checks) ->
                                             checkSelector
                                               address name checks
-                                              (isFocused name model.focus)))
+                                              (isFocused name focus)))
                     , div [ class "col-md-9" ] [ focusContent ] ] ]
   in
     div [ class "row" ]
@@ -239,11 +226,11 @@ displayGrouping checks =
 hasNotes : Check -> Bool
 hasNotes check = check.notes /= ""
 
-isFocused : String -> Maybe Focus -> Bool
+isFocused : String -> Maybe String -> Bool
 isFocused name focus =
   case focus of
-    Nothing         -> False
-    Just (other, _) -> name == other
+    Nothing    -> False
+    Just other -> name == other
 
 worstStatus : Checks -> Status
 worstStatus checks =

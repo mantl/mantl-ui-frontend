@@ -189,10 +189,16 @@ body {
     }
 
     .service {
-        cursor: pointer;
+        display: block;
+
+        &.passing { color: $brand-success; }
+        &.warning { color: $brand-warning; }
+        &.critical { color: $brand-danger; }
 
         &.active {
             border-color: $gray * 1.2;
+
+            text-decoration: none;
 
             &.passing { border-color: $brand-success * 1.2; }
             &.warning { border-color: $brand-warning * 1.2; }

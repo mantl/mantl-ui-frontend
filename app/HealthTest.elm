@@ -76,37 +76,13 @@ updateTests =
                           (updated, _) = update (NewChecks (Just [ passing ])) errored
                         in
                           assertEqual updated.error Nothing)
-                 , test "should update focused apps, too"
-                        (let
-                          (focused, _) = { initial | checks <- [ unknown ] } |> update (Focus unknown.serviceName)
-                          (updated, _) = update (NewChecks (Just [ warning ])) focused
-                        in
-                          assertEqual
-                            updated.focus
-                            (Just (warning.serviceName, Just [ warning ])))
                  ] ++ unhealthyUpdateTests)
         , suite "LoadChecks"
                 [ test "new health checks are loaded"
                        (let
                          (_, fx) = update LoadChecks initial
                        in
-                         assertEqual fx loadHealth) ]
-        , suite "Focus"
-                [ test "focus works on a known group"
-                       (let
-                         filled = { initial | checks <- [ passing ] }
-                         (updated, _) = update (Focus passing.serviceName) filled
-                       in
-                         assertEqual
-                           updated.focus
-                           (Just (passing.serviceName, Just [ passing ])))
-                , test "focus works on an unknown group"
-                       (let
-                         (updated, _) = update (Focus passing.serviceName) initial
-                       in
-                         assertEqual
-                           updated.focus
-                           (Just (passing.serviceName, Nothing))) ] ]
+                         assertEqual fx loadHealth) ] ]
 
 addCheckTests : Test
 addCheckTests =
@@ -172,9 +148,9 @@ isFocusedTests : Test
 isFocusedTests =
   suite "isFocused"
         [ test "focused"
-               (assert (isFocused passing.name (Just (passing.name, Nothing))))
+               (assert (isFocused passing.name (Just passing.name)))
         , test "unfocused"
-               (assert (not (isFocused passing.name (Just ("not", Nothing)))))
+               (assert (not (isFocused passing.name (Just "not"))))
         , test "nothing"
                (assert (not (isFocused passing.name Nothing)))]
 

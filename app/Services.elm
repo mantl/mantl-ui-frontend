@@ -68,7 +68,7 @@ serviceView address health service =
                 , href service.path ]
                 [ text "Web UI" ]
             , a [ classes [ "btn", "btn-block", "btn-health", Health.statusToClass health ]
-                , href (Route.urlFor Route.HealthOverview)]
+                , href (Route.urlFor (Route.HealthCheck service.name))]
                 [ text ("Checks: " ++ (Health.statusToString health))]] ]
 
 view : Signal.Address Action -> Model -> Health.Model -> Html
