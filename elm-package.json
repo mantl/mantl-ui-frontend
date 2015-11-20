@@ -10,7 +10,6 @@
     "dependencies": {
         "Apanatshka/elm-signal-extra": "5.6.0 <= v < 6.0.0",
         "TheSeamau5/elm-history": "1.0.0 <= v < 2.0.0",
-        "TheSeamau5/elm-router": "1.0.0 <= v < 2.0.0",
         "deadfoxygrandpa/elm-test": "2.0.0 <= v < 3.0.0",
         "elm-lang/core": "2.1.0 <= v < 3.0.0",
         "evancz/elm-effects": "2.0.0 <= v < 3.0.0",
