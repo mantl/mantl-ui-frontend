@@ -72,7 +72,7 @@ updateTests =
                           assertEqual updated.error (Just "Could not retrieve health checks"))
                  , test "a just value unsets an error"
                         (let
-                          errored = { initial | error <- Just "test" }
+                          errored = { initial | error = Just "test" }
                           (updated, _) = update (NewChecks (Just [ passing ])) errored
                         in
                           assertEqual updated.error Nothing)

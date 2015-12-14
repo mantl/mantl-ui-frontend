@@ -56,12 +56,12 @@ update : Action -> Model -> (Model, Effects Action)
 update action model =
   case action of
     NewChecks Nothing ->
-      ( { model | error <- Just "Could not retrieve health checks" }, Effects.none )
+      ( { model | error = Just "Could not retrieve health checks" }, Effects.none )
 
     NewChecks (Just checks) ->
-      ( { model | checks <- checks
-                , status <- worstStatus checks
-                , error <- Nothing }
+      ( { model | checks = checks
+                , status = worstStatus checks
+                , error = Nothing }
       , Effects.none )
 
     LoadChecks ->

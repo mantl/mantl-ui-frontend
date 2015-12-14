@@ -34,15 +34,15 @@ update action model =
         -- we should accept an update without triggering an update notification
         -- on initial load (AKA Nothing)
         Nothing ->
-          ( { model | current <- Just new }, Effects.none )
+          ( { model | current = Just new }, Effects.none )
 
         -- ... and if we get a new version after the initial value is set, we
         -- should trigger the update notification
         Just old ->
           if old == new
           then ( model, Effects.none )
-          else ( { model | current <- Just new
-                         , hasUpdate <- True }
+          else ( { model | current = Just new
+                         , hasUpdate = True }
                , Effects.none)
 
 -- ACTIONS

@@ -54,28 +54,28 @@ update action model =
       let
         (services, fx) = Services.update sub model.services
       in
-        ( { model | services <- services }
+        ( { model | services = services }
         , Effects.map ServicesAction fx )
 
     RouteAction sub ->
       let
         (route, fx) = Route.update sub model.route
       in
-        ( { model | route <- route }
+        ( { model | route = route }
         , Effects.map RouteAction fx )
 
     VersionAction sub ->
       let
         (version, fx) = Version.update sub model.version
       in
-        ( { model | version <- version }
+        ( { model | version = version }
         , Effects.map VersionAction fx )
 
     HealthAction sub ->
       let
         (health, fx) = Health.update sub model.health
       in
-        ( { model | health <- health }
+        ( { model | health = health }
         , Effects.map HealthAction fx )
 
 -- VIEW

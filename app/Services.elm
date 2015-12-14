@@ -42,8 +42,6 @@ update action model =
     LoadServices ->
       ( model, loadServices )
 
-    _ -> (model, Effects.none)
-
 -- ACTIONS
 
 loadServices : Effects Action

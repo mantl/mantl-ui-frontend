@@ -25,12 +25,12 @@ updateTests =
                        in
                          assertEqual
                            (update (NewVersion (Just version)) initial)
-                           ( { initial | current <- Just version }, Effects.none) )
+                           ( { initial | current = Just version }, Effects.none) )
                 , test "same version does not indicate change"
                        (let
                          (initial, _) = init
                          version = "a"
-                         model = { initial | current <- Just version }
+                         model = { initial | current = Just version }
                        in
                          assertEqual
                            (update (NewVersion (Just version)) model)
@@ -40,9 +40,9 @@ updateTests =
                          (initial, _) = init
                          version = "a"
                          updated = "b"
-                         model = { initial | current <- Just version }
-                         endState = { initial | current <- Just updated
-                                              , hasUpdate <- True }
+                         model = { initial | current = Just version }
+                         endState = { initial | current = Just updated
+                                              , hasUpdate = True }
                        in
                          assertEqual
                            (update (NewVersion (Just updated)) model)
