@@ -120,6 +120,8 @@ body {
     @include logo(marathon, 180px, 180px);
     @include logo(chronos, 180px, 180px);
     @include logo(traefik, 180px, 180px);
+    @include logo(elasticsearch, 180px, 180px);
+    @include logo(kibana, 180px, 180px);
 }
 
 /* version */

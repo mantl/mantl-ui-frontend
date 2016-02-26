@@ -20,8 +20,10 @@ It looks a bit like this:
 1. Install [Elm](http://elm-lang.org/install)
 2. Install Elm dependencies: `elm package install`
 3. Install Node dependencies: `npm install`
-4. Run `brunch watch --server` to continuously compile
-5. View the app at [localhost:3333](http://localhost:3333/)
+4. Install netpbm: `brew install netpbm` (on a Mac)
+5. Install [Brunch](http://brunch.io) globally: `npm install -g brunch`
+6. Run `brunch watch --server` to continuously compile
+7. View the app at [localhost:3333](http://localhost:3333/)
 
 ### Tests
 
