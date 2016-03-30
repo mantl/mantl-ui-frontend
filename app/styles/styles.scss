@@ -79,12 +79,12 @@ body {
 }
 
 /* logos */
-@mixin logo($name, $width, $height) {
+@mixin logo($name, $width, $height, $imgname) {
     .#{$name} {
         width: $width;
         height: $height;
-        background: url("../images/logos/#{$name}.png") no-repeat;
-        @include image-2x("../images/logos/#{$name}@2x.png", $width, $height);
+        background: url("../images/logos/#{$imgname}.png") no-repeat;
+        @include image-2x("../images/logos/#{$imgname}@2x.png", $width, $height);
     }
 }
 
@@ -115,14 +115,17 @@ body {
         margin: 0 auto;
     }
 
-    @include logo(mesos, 153px, 180px);
-    @include logo(consul, 178px, 180px);
-    @include logo(marathon, 180px, 180px);
-    @include logo(chronos, 180px, 180px);
-    @include logo(traefik, 180px, 180px);
-    @include logo(elasticsearch, 180px, 180px);
-    @include logo(kibana, 180px, 180px);
-    @include logo(kubernetes, 180px, 180px);
+    @include logo(mesos, 153px, 180px, mesos);
+    @include logo(consul, 178px, 180px, consul);
+    @include logo(marathon, 180px, 180px, marathon);
+    @include logo(chronos, 180px, 180px, chronos);
+    @include logo(traefik, 180px, 180px, traefik);
+    @include logo(kubernetes, 180px, 180px, kubernetes);
+    @include logo(elasticsearch, 180px, 180px, elasticsearch);
+    @include logo(elasticsearch-mantl, 180px, 180px, elasticsearch);
+    @include logo(kibana, 180px, 180px, kibana);
+    @include logo(kibana-mantl, 180px, 180px, kibana);
+    @include logo(kibana-mantl-task, 180px, 180px, kibana);
 }
 
 /* version */
