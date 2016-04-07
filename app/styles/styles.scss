@@ -122,6 +122,7 @@ body {
     @include logo(traefik, 180px, 180px);
     @include logo(elasticsearch, 180px, 180px);
     @include logo(kibana, 180px, 180px);
+    @include logo(kubernetes, 180px, 180px);
 }
 
 /* version */
