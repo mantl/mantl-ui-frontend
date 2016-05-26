@@ -1,4 +1,4 @@
-module VersionTest where
+module VersionTest exposing (..)
 
 import Effects
 import ElmTest.Assertion exposing (assertEqual)

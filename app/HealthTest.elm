@@ -1,4 +1,4 @@
-module HealthTest where
+module HealthTest exposing (..)
 
 import Dict exposing (Dict)
 import ElmTest.Assertion exposing (assert, assertEqual)

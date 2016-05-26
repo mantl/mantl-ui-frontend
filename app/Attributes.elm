@@ -1,4 +1,4 @@
-module Attributes where
+module Attributes exposing (..)
 
 import Html exposing (Attribute)
 import Html.Attributes exposing (classList)

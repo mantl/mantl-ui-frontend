@@ -1,4 +1,4 @@
-module Mantl where
+module Mantl exposing (..)
 
 import Attributes exposing (classes)
 import Effects exposing (Effects)

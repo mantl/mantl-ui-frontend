@@ -1,4 +1,4 @@
-module RouteTest where
+module RouteTest exposing (..)
 
 import Effects
 import ElmTest.Assertion exposing (assertEqual)

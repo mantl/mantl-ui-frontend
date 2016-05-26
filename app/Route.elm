@@ -1,4 +1,4 @@
-module Route where
+module Route exposing (..)
 
 import Attributes exposing (classes)
 import Effects exposing (Effects)

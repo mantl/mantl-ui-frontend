@@ -1,4 +1,4 @@
-module ServicesTest where
+module ServicesTest exposing (..)
 
 import Effects
 import ElmTest.Assertion exposing (assertEqual)

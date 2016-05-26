@@ -1,4 +1,4 @@
-module Version where
+module Version exposing (..)
 
 import Attributes exposing (classes)
 import Effects exposing (Effects)

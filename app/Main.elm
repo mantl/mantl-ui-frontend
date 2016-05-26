@@ -1,4 +1,4 @@
-module WebUI where
+module WebUI exposing (..)
 
 import Effects
 import History

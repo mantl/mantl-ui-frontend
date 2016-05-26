@@ -1,4 +1,4 @@
-module Test where
+module Test exposing (..)
 
 import Graphics.Element exposing (Element)
 

@@ -1,4 +1,4 @@
-module Health where
+module Health exposing (..)
 
 import Attributes exposing (classes)
 import Debug
