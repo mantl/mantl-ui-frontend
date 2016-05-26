@@ -39,7 +39,7 @@ type alias Model = { status : Status
                    , checks : Checks
                    , error : Maybe String }
 
-init : ( Model, Effects Action )
+init : ( Model, Effects Msg )
 init =
   ( { status = Unknown
     , checks = [ ]
@@ -48,11 +48,11 @@ init =
 
 -- UPDATE
 
-type Action
+type Msg
   = NewChecks (Maybe Checks)
   | LoadChecks
 
-update : Action -> Model -> (Model, Effects Action)
+update : Msg -> Model -> (Model, Effects Msg)
 update action model =
   case action of
     NewChecks Nothing ->
@@ -69,7 +69,7 @@ update action model =
 
 -- ACTIONS
 
-loadHealth : Effects Action
+loadHealth : Effects Msg
 loadHealth =
   Http.get (list healthCheckDecoder) "/consul/v1/health/state/any"
       |> Task.toMaybe
@@ -127,7 +127,7 @@ attributes attrs =
                                            [ dt [ ] [ text key ]
                                            , dd [ ] [ code [ ] [ text value ] ] ] ))
 
-checkSelector : Signal.Address Action -> String -> Checks -> Bool -> Html
+checkSelector : Signal.Address Msg -> String -> Checks -> Bool -> Html
 checkSelector address name checks active =
   a [ classList [ ("service", True)
                 , ("card", True)
@@ -137,7 +137,7 @@ checkSelector address name checks active =
     , href (Route.urlFor (Route.HealthCheck name)) ]
     [ text name ]
 
-checkDetail : Signal.Address Action -> Check -> Html
+checkDetail : Signal.Address Msg -> Check -> Html
 checkDetail address check =
   div [ classes [ "check", "card", "card-block", statusToClass check.status ] ]
       [ h2 [ ] [ text check.name ]
@@ -152,7 +152,7 @@ checkDetail address check =
       , p [ ] [ strong [ ] [ text "Output:" ] ]
       , pre [ class "output" ] [ code [ ] [ text check.output ] ] ]
 
-view : Signal.Address Action -> Model -> Maybe String -> Html
+view : Signal.Address Msg -> Model -> Maybe String -> Html
 view address model focus =
   let
     content =

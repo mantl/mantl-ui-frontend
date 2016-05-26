@@ -21,9 +21,9 @@ init = Nothing
 
 -- UPDATE
 
-type Action = PathChange String
+type Msg = PathChange String
 
-update : Action -> Model -> (Model, Effects Action)
+update : Msg -> Model -> (Model, Effects Msg)
 update action model =
   case action of
     PathChange path ->

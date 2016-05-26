@@ -20,10 +20,10 @@ app = StartApp.start { init = Mantl.init
 main : Signal Html
 main = app.html
 
-hash : Signal Mantl.Action
-hash = Signal.map (Route.PathChange >> Mantl.RouteAction) History.hash
+hash : Signal Mantl.Msg
+hash = Signal.map (Route.PathChange >> Mantl.RouteMsg) History.hash
 
-refresh : Signal Mantl.Action
+refresh : Signal Mantl.Msg
 refresh =
   every (10 * second)
     |> Signal.map (\_ -> Mantl.Refresh)

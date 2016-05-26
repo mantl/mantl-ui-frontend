@@ -13,7 +13,7 @@ import Task
 type alias Model = { current : Maybe String
                    , hasUpdate : Bool }
 
-init : (Model, Effects Action)
+init : (Model, Effects Msg)
 init =
   ( { current = Nothing
     , hasUpdate = False }
@@ -21,9 +21,9 @@ init =
 
 -- UPDATE
 
-type Action = NewVersion (Maybe String)
+type Msg = NewVersion (Maybe String)
 
-update : Action -> Model -> (Model, Effects Action)
+update : Msg -> Model -> (Model, Effects Msg)
 update action model =
   case action of
     NewVersion Nothing ->
@@ -47,7 +47,7 @@ update action model =
 
 -- ACTIONS
 
-loadVersion : Effects Action
+loadVersion : Effects Msg
 loadVersion =
   Http.getString "signature"
       |> Task.toMaybe
@@ -56,7 +56,7 @@ loadVersion =
 
 -- VIEW
 
-notification : Signal.Address Action -> Model -> Html
+notification : Signal.Address Msg -> Model -> Html
 notification address model =
   if model.hasUpdate
   then div [ classes [ "navbar", "navbar-attention" ] ]
@@ -64,7 +64,7 @@ notification address model =
                  [ p [ class "nav-item" ] [ text "New version available. Please reload!" ] ] ]
   else div [] []
 
-version : Signal.Address Action -> Model -> Html
+version : Signal.Address Msg -> Model -> Html
 version address model =
   div [ class "version" ]
       [ Maybe.withDefault "No Version" model.current |> text ]

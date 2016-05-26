@@ -23,17 +23,17 @@ type alias Services = List Service
 
 type alias Model = Maybe Services
 
-init : ( Model, Effects Action )
+init : ( Model, Effects Msg )
 init =
   (Nothing, loadServices)
 
 -- UPDATE
 
-type Action
+type Msg
   = LoadServices
   | NewServices Model
 
-update : Action -> Model -> (Model, Effects Action)
+update : Msg -> Model -> (Model, Effects Msg)
 update action model =
   case action of
     NewServices services ->
@@ -44,7 +44,7 @@ update action model =
 
 -- ACTIONS
 
-loadServices : Effects Action
+loadServices : Effects Msg
 loadServices =
   Http.get (list serviceDecoder) "/_internal/services.json"
       |> Task.toMaybe
@@ -60,7 +60,7 @@ serviceDecoder = object4 Service
 
 -- VIEW
 
-serviceView : Signal.Address Action -> Health.Status -> Service -> Html
+serviceView : Signal.Address Msg -> Health.Status -> Service -> Html
 serviceView address health service =
   div [ classes [ "col-sm-3", "service" ] ]
       [ div [ classes [ "card", "card-block" ] ]
@@ -73,7 +73,7 @@ serviceView address health service =
                 , href (Route.urlFor (Route.HealthCheck service.check))]
                 [ text ("Checks: " ++ (Health.statusToString health))]] ]
 
-view : Signal.Address Action -> Model -> Health.Model -> Html
+view : Signal.Address Msg -> Model -> Health.Model -> Html
 view address model health =
   let
     content =

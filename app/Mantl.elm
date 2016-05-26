@@ -17,7 +17,7 @@ type alias Model = { route : Route.Model
                    , version : Version.Model
                    , health : Health.Model }
 
-init : ( Model, Effects Action )
+init : ( Model, Effects Msg )
 init =
   let
     route = Route.init
@@ -29,76 +29,76 @@ init =
       , services = services
       , version = version
       , health = health }
-    , Effects.batch [ Effects.map ServicesAction sfx
-                    , Effects.map VersionAction vfx
-                    , Effects.map HealthAction hfx ] )
+    , Effects.batch [ Effects.map ServicesMsg sfx
+                    , Effects.map VersionMsg vfx
+                    , Effects.map HealthMsg hfx ] )
 
 -- UPDATE
 
-type Action
+type Msg
   = Refresh
-  | RouteAction Route.Action
-  | ServicesAction Services.Action
-  | VersionAction Version.Action
-  | HealthAction Health.Action
+  | RouteMsg Route.Msg
+  | ServicesMsg Services.Msg
+  | VersionMsg Version.Msg
+  | HealthMsg Health.Msg
 
-update : Action -> Model -> (Model, Effects Action)
+update : Msg -> Model -> (Model, Effects Msg)
 update action model =
   case action of
     Refresh ->
       ( model
-      , Effects.batch [ Effects.map VersionAction Version.loadVersion
-                      , Effects.map HealthAction Health.loadHealth ] )
+      , Effects.batch [ Effects.map VersionMsg Version.loadVersion
+                      , Effects.map HealthMsg Health.loadHealth ] )
 
-    ServicesAction sub ->
+    ServicesMsg sub ->
       let
         (services, fx) = Services.update sub model.services
       in
         ( { model | services = services }
-        , Effects.map ServicesAction fx )
+        , Effects.map ServicesMsg fx )
 
-    RouteAction sub ->
+    RouteMsg sub ->
       let
         (route, fx) = Route.update sub model.route
       in
         ( { model | route = route }
-        , Effects.map RouteAction fx )
+        , Effects.map RouteMsg fx )
 
-    VersionAction sub ->
+    VersionMsg sub ->
       let
         (version, fx) = Version.update sub model.version
       in
         ( { model | version = version }
-        , Effects.map VersionAction fx )
+        , Effects.map VersionMsg fx )
 
-    HealthAction sub ->
+    HealthMsg sub ->
       let
         (health, fx) = Health.update sub model.health
       in
         ( { model | health = health }
-        , Effects.map HealthAction fx )
+        , Effects.map HealthMsg fx )
 
 -- VIEW
 
-view : Signal.Address Action -> Model -> Html
+view : Signal.Address Msg -> Model -> Html
 view address model =
   let
     link = Route.navItem model.route
     body =
       case model.route of
         Just (Route.Home) ->
-          Services.view (Signal.forwardTo address ServicesAction) model.services model.health
+          Services.view (Signal.forwardTo address ServicesMsg) model.services model.health
 
         Just (Route.HealthOverview) ->
-          Health.view (Signal.forwardTo address HealthAction) model.health Nothing
+          Health.view (Signal.forwardTo address HealthMsg) model.health Nothing
 
         Just (Route.HealthCheck app) ->
-          Health.view (Signal.forwardTo address HealthAction) model.health (Just app)
+          Health.view (Signal.forwardTo address HealthMsg) model.health (Just app)
 
         Nothing -> Route.notfound
   in
     div [ class "app" ]
-        [ Version.notification (Signal.forwardTo address VersionAction) model.version
+        [ Version.notification (Signal.forwardTo address VersionMsg) model.version
         , div [ classes [ "navbar", "navbar-inverted" ] ]
               [ div [ class "container" ]
                     [ a [ class "navbar-brand"
@@ -114,4 +114,4 @@ view address model =
                               , model.health.status |> Health.statusToString |> text ] ] ] ]
         , div [ classes [ "container", "content" ] ]
               [ body
-              , Version.view (Signal.forwardTo address VersionAction) model.version ] ]
+              , Version.view (Signal.forwardTo address VersionMsg) model.version ] ]
