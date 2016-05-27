@@ -1,32 +1,19 @@
 module WebUI exposing (..)
 
-import Effects
-import History
-import Html exposing (Html)
 import Mantl
+import Navigation
 import Route
-import Signal
-import StartApp
-import Task
-import Time exposing (every, second)
+import Time
 
-app : StartApp.App Mantl.Model
-app = StartApp.start { init = Mantl.init
-                     , update = Mantl.update
-                     , view = Mantl.view
-                     , inputs = [ refresh ]
-                     , inits = [ hash ] }
+main =
+  Navigation.program
+    (Navigation.makeParser Route.locFor)
+    { init = Mantl.init
+    , update = Mantl.update
+    , urlUpdate = Mantl.updateRoute
+    , view = Mantl.view
+    , subscriptions = subscriptions }
 
-main : Signal Html
-main = app.html
-
-hash : Signal Mantl.Msg
-hash = Signal.map (Route.PathChange >> Mantl.RouteMsg) History.hash
-
-refresh : Signal Mantl.Msg
-refresh =
-  every (10 * second)
-    |> Signal.map (\_ -> Mantl.Refresh)
-
-port tasks : Signal (Task.Task Effects.Never ())
-port tasks = app.tasks
+subscriptions : Mantl.Model -> Sub Mantl.Msg
+subscriptions model =
+  Time.every (10 * Time.second) (\_ -> Mantl.Refresh)

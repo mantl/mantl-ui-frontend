@@ -3,7 +3,6 @@ module Health exposing (..)
 import Attributes exposing (classes)
 import Debug
 import Dict exposing (Dict)
-import Effects exposing (Effects)
 import Html exposing (..)
 import Html.Attributes exposing (class, classList, href)
 import Html.Events exposing (onClick)
@@ -14,6 +13,7 @@ import Maybe
 import Result
 import Route
 import Task
+import Task.Extra
 
 -- MODEL
 
@@ -39,12 +39,11 @@ type alias Model = { status : Status
                    , checks : Checks
                    , error : Maybe String }
 
-init : ( Model, Effects Msg )
+init : ( Model, Cmd Msg )
 init =
-  ( { status = Unknown
+  { status = Unknown
     , checks = [ ]
-    , error = Nothing }
-  , loadHealth )
+    , error = Nothing } ! [ loadHealth ]
 
 -- UPDATE
 
@@ -52,29 +51,27 @@ type Msg
   = NewChecks (Maybe Checks)
   | LoadChecks
 
-update : Msg -> Model -> (Model, Effects Msg)
+update : Msg -> Model -> (Model, Cmd Msg)
 update action model =
   case action of
     NewChecks Nothing ->
-      ( { model | error = Just "Could not retrieve health checks" }, Effects.none )
+      { model | error = Just "Could not retrieve health checks" } ! [ ]
 
     NewChecks (Just checks) ->
-      ( { model | checks = checks
+      { model | checks = checks
                 , status = worstStatus checks
-                , error = Nothing }
-      , Effects.none )
+                , error = Nothing } ! [ ]
 
     LoadChecks ->
       ( model, loadHealth )
 
 -- ACTIONS
 
-loadHealth : Effects Msg
+loadHealth : Cmd Msg
 loadHealth =
   Http.get (list healthCheckDecoder) "/consul/v1/health/state/any"
       |> Task.toMaybe
-      |> Task.map NewChecks
-      |> Effects.task
+      |> Task.Extra.performFailproof NewChecks
 
 healthCheckDecoder : Decoder Check
 healthCheckDecoder = object8 Check
@@ -114,12 +111,12 @@ statusToString status =
     Other o -> "Unknown Status: " ++ o
     _       -> toString status
 
-healthDot : Status -> String -> Html
+healthDot : Status -> String -> Html a
 healthDot status size =
   span [ classes [ "healthdot", size, statusToClass status ] ]
        [ status |> statusToString |> text ]
 
-attributes : List (String, String) -> Html
+attributes : List (String, String) -> Html Msg
 attributes attrs =
   dl [ class "attributes" ]
      (attrs
@@ -127,8 +124,8 @@ attributes attrs =
                                            [ dt [ ] [ text key ]
                                            , dd [ ] [ code [ ] [ text value ] ] ] ))
 
-checkSelector : Signal.Address Msg -> String -> Checks -> Bool -> Html
-checkSelector address name checks active =
+checkSelector : String -> Checks -> Bool -> Html Msg
+checkSelector name checks active =
   a [ classList [ ("service", True)
                 , ("card", True)
                 , ("card-block", True)
@@ -137,8 +134,8 @@ checkSelector address name checks active =
     , href (Route.urlFor (Route.HealthCheck name)) ]
     [ text name ]
 
-checkDetail : Signal.Address Msg -> Check -> Html
-checkDetail address check =
+checkDetail : Check -> Html Msg
+checkDetail check =
   div [ classes [ "check", "card", "card-block", statusToClass check.status ] ]
       [ h2 [ ] [ text check.name ]
       , attributes [ ("Status", check.status |> statusToString)
@@ -152,8 +149,8 @@ checkDetail address check =
       , p [ ] [ strong [ ] [ text "Output:" ] ]
       , pre [ class "output" ] [ code [ ] [ text check.output ] ] ]
 
-view : Signal.Address Msg -> Model -> Maybe String -> Html
-view address model focus =
+view : Model -> Maybe String -> Html Msg
+view model focus =
   let
     content =
       if List.isEmpty model.checks
@@ -177,13 +174,13 @@ view address model focus =
                          [ healthDot (worstStatus checks) "large"
                          , text name ]
                     , div [ class "checks" ]
-                          (List.map (checkDetail address) checks)]
+                          (List.map checkDetail checks)]
         in
           div [ class "col-sm-12" ]
               [ div [ classes [ "row", "controls" ] ]
                     [ div [ class "col-sm-12" ]
                           [ button [ classes [ "btn", "btn-sm", "btn-secondary" ]
-                                   , onClick address LoadChecks ]
+                                   , onClick LoadChecks ]
                                    [ text "Reload Health Checks" ] ] ]
               , div [ classes [ "row", "healthchecks" ] ]
                     [ div [ classes [ "services", "col-md-3" ] ]
@@ -191,7 +188,7 @@ view address model focus =
                              |> Dict.toList
                              |> List.map (\ (name, checks) ->
                                             checkSelector
-                                              address name checks
+                                              name checks
                                               (isFocused name focus)))
                     , div [ class "col-md-9" ] [ focusContent ] ] ]
   in

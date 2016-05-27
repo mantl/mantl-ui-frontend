@@ -1,11 +1,9 @@
 module Route exposing (..)
 
-import Attributes exposing (classes)
-import Effects exposing (Effects)
--- import Health
 import Html exposing (..)
 import Html.Attributes exposing (class, classList, href)
 import String exposing (split)
+import Navigation
 
 -- MODEL
 
@@ -16,18 +14,19 @@ type Location
 
 type alias Model = Maybe Location
 
-init : Model
-init = Nothing
+init : Maybe Location -> (Model, Cmd Msg)
+init location =
+  location ! [ ]
 
 -- UPDATE
 
 type Msg = PathChange String
 
-update : Msg -> Model -> (Model, Effects Msg)
+update : Msg -> Model -> (Model, Cmd Msg)
 update action model =
   case action of
     PathChange path ->
-      ( (locFor path), Effects.none )
+      model ! [ ]
 
 -- UTIL
 
@@ -42,11 +41,11 @@ urlFor loc =
   in
     "#" ++ url
 
-locFor : String -> Maybe Location
+locFor : Navigation.Location -> Maybe Location
 locFor path =
   let
     segments =
-      path
+      path.hash
         |> split "/"
         |> List.filter (\seg -> seg /= "" && seg /= "#")
   in
@@ -64,13 +63,13 @@ parentFor child =
 
 -- VIEW
 
-notfound : Html
+notfound : Html Msg
 notfound =
   div [ class "row" ]
       [ p [ class "col-sm-12" ]
           [ text "Not found!" ] ]
 
-navItem : Model -> Location -> String -> Html
+navItem : Model -> Location -> String -> Html Msg
 navItem model page caption =
   let
     active =

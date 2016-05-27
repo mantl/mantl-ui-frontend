@@ -1,7 +1,6 @@
 module Services exposing (..)
 
 import Attributes exposing (classes)
-import Effects exposing (Effects)
 import Health
 import Html exposing (..)
 import Html.Attributes exposing (href, class)
@@ -9,8 +8,8 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode exposing ((:=), Decoder, object4, string, list)
 import Route
-import Signal
 import Task
+import Task.Extra
 
 -- MODEL
 
@@ -23,7 +22,7 @@ type alias Services = List Service
 
 type alias Model = Maybe Services
 
-init : ( Model, Effects Msg )
+init : ( Model, Cmd Msg )
 init =
   (Nothing, loadServices)
 
@@ -33,23 +32,22 @@ type Msg
   = LoadServices
   | NewServices Model
 
-update : Msg -> Model -> (Model, Effects Msg)
+update : Msg -> Model -> (Model, Cmd Msg)
 update action model =
   case action of
     NewServices services ->
-      ( services, Effects.none )
+      services ! []
 
     LoadServices ->
       ( model, loadServices )
 
 -- ACTIONS
 
-loadServices : Effects Msg
+loadServices : Cmd Msg
 loadServices =
   Http.get (list serviceDecoder) "/_internal/services.json"
       |> Task.toMaybe
-      |> Task.map NewServices
-      |> Effects.task
+      |> Task.Extra.performFailproof NewServices
 
 serviceDecoder : Decoder Service
 serviceDecoder = object4 Service
@@ -60,8 +58,8 @@ serviceDecoder = object4 Service
 
 -- VIEW
 
-serviceView : Signal.Address Msg -> Health.Status -> Service -> Html
-serviceView address health service =
+serviceView : Health.Status -> Service -> Html Msg
+serviceView health service =
   div [ classes [ "col-sm-3", "service" ] ]
       [ div [ classes [ "card", "card-block" ] ]
             [ div [ class "logo" ] [ div [ class service.id ] [ ] ]
@@ -73,8 +71,8 @@ serviceView address health service =
                 , href (Route.urlFor (Route.HealthCheck service.check))]
                 [ text ("Checks: " ++ (Health.statusToString health))]] ]
 
-view : Signal.Address Msg -> Model -> Health.Model -> Html
-view address model health =
+view : Model -> Health.Model -> Html Msg
+view model health =
   let
     content =
       case model of
@@ -86,11 +84,10 @@ view address model health =
               [ div [ classes [ "row", "controls" ] ]
                     [ div [ class "col-sm-12" ]
                           [ button [ classes [ "btn", "btn-sm", "btn-secondary" ]
-                                   , onClick address LoadServices ]
+                                   , onClick LoadServices ]
                                    [ text "Reload Services" ] ] ]
               , div [ classes [ "row", "services" ] ]
                     (services |> List.map (\s -> serviceView
-                                                   address
                                                    (Health.statusForService s.check health)
                                                    s)) ]
   in
