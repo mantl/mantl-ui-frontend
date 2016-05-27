@@ -1,8 +1,7 @@
 module HealthTest exposing (..)
 
 import Dict exposing (Dict)
-import ElmTest.Assertion exposing (assert, assertEqual)
-import ElmTest.Test exposing (test, Test, suite)
+import ElmTest exposing (test, Test, suite, assert, assertEqual)
 
 import Health exposing (..)
 

@@ -1,8 +1,7 @@
 module RouteTest exposing (..)
 
-import Effects
-import ElmTest.Assertion exposing (assertEqual)
-import ElmTest.Test exposing (test, Test, suite)
+import ElmTest exposing (test, Test, suite, assertEqual)
+import Navigation
 
 import Route exposing (..)
 
@@ -15,6 +14,21 @@ parents : List (Location, Location)
 parents = [ (Home, Home)
           , (HealthOverview, HealthOverview)
           , (HealthCheck "app", HealthOverview) ]
+
+locationWithHash : String -> Navigation.Location
+locationWithHash hash =
+  { hash = hash
+  , hostname = ""
+  , href = ""
+  , origin = ""
+  , password = ""
+  , pathname = ""
+  , port_ = ""
+  , protocol = ""
+  , search = ""
+  , username = ""
+  , host = "" }
+
 
 -- urlFor
 urlForTest : (Location, String) -> Test
@@ -29,13 +43,13 @@ urlForTests =
 -- locFor
 locForTest : (Location, String) -> Test
 locForTest (loc, path) =
-  test (toString loc) (assertEqual (locFor path) (Just loc))
+  test (toString loc) (assertEqual (locFor <| locationWithHash path) (Just loc))
 
 locForTests : Test
 locForTests =
   suite "locFor"
-        ([ test "Nothing" (assertEqual (locFor "/bad/url") Nothing)
-         , test "with hash" (assertEqual (locFor "#/") (Just Home)) ]
+        ([ test "Nothing" (assertEqual (locFor <| locationWithHash "/bad/url") Nothing)
+         , test "with hash" (assertEqual (locFor <| locationWithHash "#/") (Just Home)) ]
         ++ (List.map locForTest routes))
 
 -- parent
@@ -48,16 +62,7 @@ parentForTests =
   suite "parentFor"
         (List.map parentForTest parents)
 
--- update
-updateTests : Test
-updateTests =
-  suite "update"
-        [ suite "PathChange"
-                [ test "good path" (assertEqual
-                                    (update (PathChange "/") Nothing)
-                                    (Just Home, Effects.none)) ] ]
-
 -- tests
 tests : Test
 tests =
-  suite "routes" [ urlForTests, locForTests, updateTests, parentForTests ]
+  suite "routes" [ urlForTests, locForTests, parentForTests ]

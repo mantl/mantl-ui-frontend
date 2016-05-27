@@ -14,19 +14,9 @@ type Location
 
 type alias Model = Maybe Location
 
-init : Maybe Location -> (Model, Cmd Msg)
+init : Maybe Location -> (Model, Cmd a)
 init location =
   location ! [ ]
-
--- UPDATE
-
-type Msg = PathChange String
-
-update : Msg -> Model -> (Model, Cmd Msg)
-update action model =
-  case action of
-    PathChange path ->
-      model ! [ ]
 
 -- UTIL
 
@@ -63,13 +53,13 @@ parentFor child =
 
 -- VIEW
 
-notfound : Html Msg
+notfound : Html a
 notfound =
   div [ class "row" ]
       [ p [ class "col-sm-12" ]
           [ text "Not found!" ] ]
 
-navItem : Model -> Location -> String -> Html Msg
+navItem : Model -> Location -> String -> Html a
 navItem model page caption =
   let
     active =

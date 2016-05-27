@@ -1,8 +1,6 @@
 module VersionTest exposing (..)
 
-import Effects
-import ElmTest.Assertion exposing (assertEqual)
-import ElmTest.Test exposing (test, Test, suite)
+import ElmTest exposing (test, Test, suite, assertEqual)
 
 import Version exposing (..)
 
@@ -17,7 +15,7 @@ updateTests =
                        in
                          assertEqual
                            (update (NewVersion version) initial)
-                           ( initial, Effects.none ))
+                           (initial ! [ ]))
                 , test "initial state"
                        (let
                          (initial, _) = init
@@ -25,7 +23,7 @@ updateTests =
                        in
                          assertEqual
                            (update (NewVersion (Just version)) initial)
-                           ( { initial | current = Just version }, Effects.none) )
+                           ({initial | current = Just version} ! [ ]))
                 , test "same version does not indicate change"
                        (let
                          (initial, _) = init
@@ -34,7 +32,7 @@ updateTests =
                        in
                          assertEqual
                            (update (NewVersion (Just version)) model)
-                           (model, Effects.none))
+                           (model ! [ ]))
                 , test "different version indicates change"
                        (let
                          (initial, _) = init
@@ -46,7 +44,7 @@ updateTests =
                        in
                          assertEqual
                            (update (NewVersion (Just updated)) model)
-                           (endState, Effects.none)) ] ]
+                           (endState ! [ ])) ] ]
 
 -- tests
 tests : Test

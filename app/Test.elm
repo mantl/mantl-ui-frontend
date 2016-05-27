@@ -1,9 +1,6 @@
 module Test exposing (..)
 
-import Graphics.Element exposing (Element)
-
-import ElmTest.Test exposing (test, Test, suite)
-import ElmTest.Runner.Element exposing (runDisplay)
+import ElmTest exposing (test, Test, suite, runSuiteHtml)
 
 import HealthTest
 import RouteTest
@@ -18,6 +15,6 @@ tests =
         , ServicesTest.tests
         , VersionTest.tests ]
 
-main : Element
+main : Program Never
 main =
-  runDisplay tests
+  runSuiteHtml tests
