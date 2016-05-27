@@ -4,116 +4,156 @@ import Attributes exposing (classes)
 import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (class, href)
-
 import Health
 import Route
 import Services
 import Version
 
+
 -- MODEL
 
-type alias Model = { route : Route.Model
-                   , services : Services.Model
-                   , version : Version.Model
-                   , health : Health.Model }
+
+type alias Model =
+    { route : Route.Model
+    , services : Services.Model
+    , version : Version.Model
+    , health : Health.Model
+    }
+
 
 init : Maybe Route.Location -> ( Model, Cmd Msg )
 init location =
-  let
-    (route, rcmd) = Route.init location
-    (services, scmd) = Services.init
-    (health, hcmd) = Health.init
-    (version, vcmd) = Version.init
-  in
-    { route = route
-    , services = services
-    , health = health
-    , version = version }
-    ! [ Cmd.map RouteMsg rcmd
-      , Cmd.map ServicesMsg scmd
-      , Cmd.map HealthMsg hcmd
-      , Cmd.map VersionMsg vcmd ]
+    let
+        ( route, rcmd ) =
+            Route.init location
+
+        ( services, scmd ) =
+            Services.init
+
+        ( health, hcmd ) =
+            Health.init
+
+        ( version, vcmd ) =
+            Version.init
+    in
+        { route = route
+        , services = services
+        , health = health
+        , version = version
+        }
+            ! [ Cmd.map RouteMsg rcmd
+              , Cmd.map ServicesMsg scmd
+              , Cmd.map HealthMsg hcmd
+              , Cmd.map VersionMsg vcmd
+              ]
+
+
 
 -- UPDATE
 
+
 type Msg
-  = Refresh
-  | ServicesMsg Services.Msg
-  | RouteMsg Route.Msg
-  | VersionMsg Version.Msg
-  | HealthMsg Health.Msg
+    = Refresh
+    | ServicesMsg Services.Msg
+    | RouteMsg Route.Msg
+    | VersionMsg Version.Msg
+    | HealthMsg Health.Msg
 
-update : Msg -> Model -> (Model, Cmd Msg)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
-  case action of
-    Refresh ->
-      model ! [ Cmd.map VersionMsg Version.loadVersion
-              , Cmd.map HealthMsg Health.loadHealth
-              , Cmd.map ServicesMsg Services.loadServices ]
+    case action of
+        Refresh ->
+            model
+                ! [ Cmd.map VersionMsg Version.loadVersion
+                  , Cmd.map HealthMsg Health.loadHealth
+                  , Cmd.map ServicesMsg Services.loadServices
+                  ]
 
-    ServicesMsg sub ->
-      let
-        (services, cmd) = Services.update sub model.services
-      in
-        { model | services = services } ! [ Cmd.map ServicesMsg cmd ]
+        ServicesMsg sub ->
+            let
+                ( services, cmd ) =
+                    Services.update sub model.services
+            in
+                { model | services = services } ! [ Cmd.map ServicesMsg cmd ]
 
-    RouteMsg sub ->
-      let
-        (route, cmd) = Route.update sub model.route
-      in
-        { model | route = route } ! [ Cmd.map RouteMsg cmd ]
+        RouteMsg sub ->
+            let
+                ( route, cmd ) =
+                    Route.update sub model.route
+            in
+                { model | route = route } ! [ Cmd.map RouteMsg cmd ]
 
-    VersionMsg sub ->
-      let
-        (version, cmd) = Version.update sub model.version
-      in
-        { model | version = version } ! [ Cmd.map VersionMsg cmd ]
+        VersionMsg sub ->
+            let
+                ( version, cmd ) =
+                    Version.update sub model.version
+            in
+                { model | version = version } ! [ Cmd.map VersionMsg cmd ]
 
-    HealthMsg sub ->
-      let
-        (health, cmd) = Health.update sub model.health
-      in
-        { model | health = health } ! [ Cmd.map HealthMsg cmd]
+        HealthMsg sub ->
+            let
+                ( health, cmd ) =
+                    Health.update sub model.health
+            in
+                { model | health = health } ! [ Cmd.map HealthMsg cmd ]
 
-updateRoute : Maybe Route.Location -> Model -> (Model, Cmd Msg)
+
+updateRoute : Maybe Route.Location -> Model -> ( Model, Cmd Msg )
 updateRoute route model =
-  { model | route = route } ! [ ]
+    { model | route = route } ! []
+
+
 
 -- VIEW
 
+
 view : Model -> Html Msg
 view model =
-  let
-    link = \page caption -> App.map RouteMsg <| Route.navItem model.route page caption
-    body =
-      case model.route of
-        Just (Route.Home) ->
-          App.map ServicesMsg <| Services.view model.services model.health
+    let
+        link =
+            \page caption -> App.map RouteMsg <| Route.navItem model.route page caption
 
-        Just (Route.HealthOverview) ->
-          App.map HealthMsg <| Health.view model.health Nothing
+        body =
+            case model.route of
+                Just (Route.Home) ->
+                    App.map ServicesMsg <| Services.view model.services model.health
 
-        Just (Route.HealthCheck app) ->
-          App.map HealthMsg <| Health.view model.health (Just app)
+                Just (Route.HealthOverview) ->
+                    App.map HealthMsg <| Health.view model.health Nothing
 
-        Nothing ->
-          App.map RouteMsg <| Route.notfound
-  in
-    div [ class "app" ]
-        [ Version.notification model.version
-        , div [ classes [ "navbar", "navbar-inverted" ] ]
-              [ div [ class "container" ]
-                    [ a [ class "navbar-brand"
-                        , href (Route.urlFor Route.Home) ]
+                Just (Route.HealthCheck app) ->
+                    App.map HealthMsg <| Health.view model.health (Just app)
+
+                Nothing ->
+                    App.map RouteMsg <| Route.notfound
+    in
+        div [ class "app" ]
+            [ Version.notification model.version
+            , div [ classes [ "navbar", "navbar-inverted" ] ]
+                [ div [ class "container" ]
+                    [ a
+                        [ class "navbar-brand"
+                        , href (Route.urlFor Route.Home)
+                        ]
                         [ text "Mantl" ]
                     , ul [ classes [ "nav", "navbar-nav" ] ]
-                         [ link Route.Home "Home"
-                         , link Route.HealthOverview "Health" ]
+                        [ link Route.Home "Home"
+                        , link Route.HealthOverview "Health"
+                        ]
                     , div [ classes [ "nav", "navbar-nav", "pull-right" ] ]
-                          [ a [ classes [ "nav-item", "nav-link", "health", Health.statusToClass model.health.status ]
-                                        , href (Route.urlFor Route.HealthOverview) ]
-                              [ Health.healthDot model.health.status "small"
-                              , model.health.status |> Health.statusToString |> text ] ] ] ]
-        , div [ classes [ "container", "content" ] ]
-              [ body
-              , App.map VersionMsg <| Version.view model.version ] ]
+                        [ a
+                            [ classes [ "nav-item", "nav-link", "health", Health.statusToClass model.health.status ]
+                            , href (Route.urlFor Route.HealthOverview)
+                            ]
+                            [ Health.healthDot model.health.status "small"
+                            , model.health.status |> Health.statusToString |> text
+                            ]
+                        ]
+                    ]
+                ]
+            , div [ classes [ "container", "content" ] ]
+                [ body
+                , App.map VersionMsg <| Version.view model.version
+                ]
+            ]
