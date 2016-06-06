@@ -24,7 +24,7 @@ type alias Model =
 init : Maybe Route.Location -> ( Model, Cmd Msg )
 init location =
     let
-        ( route, rcmd ) =
+        route =
             Route.init location
 
         ( services, scmd ) =
@@ -41,8 +41,7 @@ init location =
         , health = health
         , version = version
         }
-            ! [ Cmd.map RouteMsg rcmd
-              , Cmd.map ServicesMsg scmd
+            ! [ Cmd.map ServicesMsg scmd
               , Cmd.map HealthMsg hcmd
               , Cmd.map VersionMsg vcmd
               ]
@@ -55,7 +54,6 @@ init location =
 type Msg
     = Refresh
     | ServicesMsg Services.Msg
-    | RouteMsg Route.Msg
     | VersionMsg Version.Msg
     | HealthMsg Health.Msg
 
@@ -76,13 +74,6 @@ update action model =
                     Services.update sub model.services
             in
                 { model | services = services } ! [ Cmd.map ServicesMsg cmd ]
-
-        RouteMsg sub ->
-            let
-                ( route, cmd ) =
-                    Route.update sub model.route
-            in
-                { model | route = route } ! [ Cmd.map RouteMsg cmd ]
 
         VersionMsg sub ->
             let
@@ -112,7 +103,7 @@ view : Model -> Html Msg
 view model =
     let
         link =
-            \page caption -> App.map RouteMsg <| Route.navItem model.route page caption
+            \page caption -> Route.navItem model.route page caption
 
         body =
             case model.route of
@@ -126,7 +117,7 @@ view model =
                     App.map HealthMsg <| Health.view model.health (Just app)
 
                 Nothing ->
-                    App.map RouteMsg <| Route.notfound
+                    Route.notfound
     in
         div [ class "app" ]
             [ Version.notification model.version

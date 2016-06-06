@@ -19,9 +19,9 @@ type alias Model =
     Maybe Location
 
 
-init : Maybe Location -> ( Model, Cmd a )
+init : Maybe Location -> Model
 init location =
-    location ! []
+    location
 
 
 
